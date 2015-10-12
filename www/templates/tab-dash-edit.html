@@ -1,0 +1,22 @@
+<ion-view title="Preferences">
+	<ion-nav-button side="left">
+	<ion-nav-back-button class="ion-ios-arrow-back" style="">
+	      </ion-nav-back-button>
+	</ion-nav-button>
+
+	<ion-content class="padding custom-content">
+		<ion-list show-reorder="true" show-delete="true">
+		  <ion-item type="item-text-wrap" ng-repeat="activity in vm.activities track by $index">
+		    <div class="item_description">
+		      <div class="activity_title">
+		        {{vm.getActivityLabel(activity)}}
+		      </div>
+		    </div>
+		    <ion-delete-button class="ion-minus-circled" ng-click="vm.removeItem($index)">
+		    </ion-delete-button>
+		    <ion-reorder-button class="ion-ios-drag" on-reorder="vm.moveItem(activity, $fromIndex, $toIndex)">
+		    </ion-reorder-button>
+		  </ion-item>
+		</ion-list>
+	</ion-content>	
+</ion-view>

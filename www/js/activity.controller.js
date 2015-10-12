@@ -1,23 +1,19 @@
 angular.module('tracker')
 	.controller('ActivityCtrl', ActivityCtrl);
 
-function ActivityCtrl($ionicPopup, $scope) {
+function ActivityCtrl($ionicPopup, $scope, activityService) {
 	var vm = this;
 
-	// vm.activities = [
-	// 	{ type: 'quantity', name: 'push ups' },
-	// 	{ type: 'quantity', name: 'coffees' },
-	// 	{ type: 'single', name: 'pomodoro' },
-	// 	{ type: 'duration', name: 'commute' },
-	// 	{ type: 'countdown', name: 'meditate' }
-	// ];
-	vm.activities = [];
+	vm.activities = activityService.getActivities();
 
 	vm.toggleActivity = toggleActivity;
 	vm.result;
 	vm.getActivityLabel = getActivityLabel;
 	vm.addActivity = addActivity;
+	vm.moveItem = activityService.moveItem;
+	vm.removeItem = activityService.remove;
 
+   
 	function toggleActivity(activity) {
         if (activity.type === 'quantity') {
         	toggleQuantityActivity(activity);
@@ -45,11 +41,13 @@ function ActivityCtrl($ionicPopup, $scope) {
 		return prefix + activity.name + '!';
 	}
 
+	var template = '<input type="text" ng-model="vm.newActivity.name"></input>HELLO';
+
 	function addActivity() {
 		$ionicPopup.show({
 			title: 'What activity do you want to track?',
 			inputType: 'text',
-			templateUrl: '/templates/popup-add.html',
+			templateUrl: 'templates/popup-add.html',
 			scope: $scope,
 			buttons: [{
 				text: 'Cancel'
@@ -57,11 +55,12 @@ function ActivityCtrl($ionicPopup, $scope) {
 				text: 'Add',
 				type: 'button-positive',
 				onTap: function() {
-					return vm.newActivityName;
+					return vm.newActivity;
 				}
 			}]
-		}).then(function(res) {
-	   		vm.activities.push({name: res, type: 'quantity'})
+		}).then(function(newActivity) {
+			vm.newActivity = {};
+	   		activityService.add(newActivity)
 	 	});
 	}
 
