@@ -1,0 +1,19 @@
+<ion-view title="UNIVERAL TRACKER">
+<ion-nav-buttons side="left" class="settings-icon">
+  <a class="button button-positive ion-plus bar-main" ng-click="vm.addActivity()"></a>
+</ion-nav-buttons>
+<ion-nav-buttons side="right" class="settings-icon">
+  <a class="button button-positive ion-gear-a bar-main" href="#/tab/dash/edit"></a>
+</ion-nav-buttons>
+  <ion-content class="padding custom-content">
+    <ion-list>
+      <ion-item type="item-text-wrap" ng-repeat="activity in vm.activities">
+        <div class="item_description" ng-click="vm.toggleActivity(activity)">
+          <div class="activity_title">
+            {{vm.getActivityLabel(activity)}} {{activity.value}}
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,14 @@
+<input type="text" ng-model="vm.newActivity.name"></input>
+
+<ion-radio ng-model="vm.newActivity.type" ng-value="'quantity'">
+	I did some {{vm.newActivity.name}}s
+</ion-radio>
+<ion-radio ng-model="vm.newActivity.type" ng-value="'single'">
+	I just did a {{vm.newActivity.name}}
+</ion-radio>
+<ion-radio ng-model="vm.newActivity.type" ng-value="'duration'">
+	I start {{vm.newActivity.name}}
+</ion-radio>
+<ion-radio ng-model="vm.newActivity.type" ng-value="'countdown'">
+	I will be {{vm.newActivity.name}}
+</ion-radio>

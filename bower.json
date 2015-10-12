@@ -1,0 +1,13 @@
+{
+  "name": "HelloIonic",
+  "private": "true",
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.1.0"
+  },
+  "dependencies": {
+    "moment": "~2.8.3",
+    "angular-moment": "~0.8.2",
+    "ngCordova": "~0.1.5-alpha",
+    "angular-touch": "~1.4.7"
+  }
+}
