@@ -11,6 +11,7 @@
         <div class="item_description" ng-click="vm.toggleActivity(activity)">
           <div class="activity_title">
             {{vm.getActivityLabel(activity)}} {{activity.value}}
+            <i class="ion-{{vm.getActivityIcon(activity)}}"></i>
           </div>
         </div>
       </ion-item>

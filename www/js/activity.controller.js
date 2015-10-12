@@ -1,18 +1,17 @@
 angular.module('tracker')
 	.controller('ActivityCtrl', ActivityCtrl);
 
-function ActivityCtrl($ionicPopup, $scope, activityService) {
+function ActivityCtrl($ionicPopup, $scope, activityService, historyService) {
 	var vm = this;
 
 	vm.activities = activityService.getActivities();
 
 	vm.toggleActivity = toggleActivity;
-	vm.result;
 	vm.getActivityLabel = getActivityLabel;
 	vm.addActivity = addActivity;
 	vm.moveItem = activityService.moveItem;
 	vm.removeItem = activityService.remove;
-
+	vm.getActivityIcon = getActivityIcon;
    
 	function toggleActivity(activity) {
         if (activity.type === 'quantity') {
@@ -38,10 +37,26 @@ function ActivityCtrl($ionicPopup, $scope, activityService) {
         	prefix = 'I will start ';
         }
 
+        if (prefix === '') return '';
+
 		return prefix + activity.name + '!';
 	}
 
-	var template = '<input type="text" ng-model="vm.newActivity.name"></input>HELLO';
+	function getActivityIcon(activity) {
+		if (activity.type === 'quantity') {
+        	return 'checkmark';
+        }
+        if (activity.type === 'single') {
+        	return '';
+        }
+        if (activity.type === 'duration') {
+        	return '';
+        }
+        if (activity.type === 'countdown') {
+        	return '';
+        }
+        return '';
+	}
 
 	function addActivity() {
 		$ionicPopup.show({
@@ -55,12 +70,16 @@ function ActivityCtrl($ionicPopup, $scope, activityService) {
 				text: 'Add',
 				type: 'button-positive',
 				onTap: function() {
-					return vm.newActivity;
+					if (!vm.newActivity.name || !vm.newActivity.type) {
+						e.preventDefault();
+					} else {
+						return vm.newActivity;
+					}
 				}
 			}]
 		}).then(function(newActivity) {
 			vm.newActivity = {};
-	   		activityService.add(newActivity)
+	   		activityService.add(newActivity);
 	 	});
 	}
 
@@ -70,6 +89,7 @@ function ActivityCtrl($ionicPopup, $scope, activityService) {
 			inputType: 'number',
 		}).then(function(res) {
 	   		activity.value = res;
+    		historyService.add(activity.name, res);
 	 	});
 	}
 

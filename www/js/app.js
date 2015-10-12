@@ -57,6 +57,15 @@ angular.module('tracker')
                       controller: 'ActivityCtrl as vm'
                   }
               }
+          })
+          .state('tab.history', {
+              url: '/history',
+              views: {
+                  'tab-history': {
+                      templateUrl: 'templates/tab-history.html',
+                      controller: 'HistoryCtrl as vm'
+                  }
+              }
           });
 
       // if none of the above states are matched, use this as the fallback

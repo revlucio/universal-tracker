@@ -1,0 +1,9 @@
+<ion-view title="HISTORY">
+  <ion-content class="padding custom-content">
+    <ion-list>
+      <ion-item type="item-text-wrap" ng-repeat="item in vm.historyItems track by $index">
+        {{item.event}} - {{item.value}} - {{item.when}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
