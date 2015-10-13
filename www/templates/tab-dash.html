@@ -10,7 +10,7 @@
       <ion-item type="item-text-wrap" ng-repeat="activity in vm.activities track by $index">
         <div class="item_description" ng-click="vm.toggleActivity(activity)">
           <div class="activity_title">
-            {{vm.getActivityLabel(activity)}} {{activity.value}}
+            {{vm.getActivityLabel(activity)}}
             <i class="ion-{{vm.getActivityIcon(activity)}}"></i>
           </div>
         </div>

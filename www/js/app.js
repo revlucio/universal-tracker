@@ -66,7 +66,17 @@ angular.module('tracker')
                       controller: 'HistoryCtrl as vm'
                   }
               }
-          });
+          })
+          .state('tab.charts', {
+              url: '/charts',
+              views: {
+                  'tab-charts': {
+                      templateUrl: 'templates/tab-charts.html',
+                      controller: 'ChartCtrl as vm'
+                  }
+              }
+          })
+          ;
 
       // if none of the above states are matched, use this as the fallback
       $urlRouterProvider.otherwise('/tab/dash');

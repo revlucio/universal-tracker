@@ -2,7 +2,7 @@ angular.module('tracker')
 	.factory('historyService', historyService);
 
 function historyService() {
-	var history = [];
+	var history = JSON.parse(window.localStorage['history'] || '[]');;
 
 	return {
 		getHistory,
@@ -15,5 +15,10 @@ function historyService() {
 
 	function add(event, value) {
 		history.push({event: event, value: value, when: new Date()});
+		save();
 	}
+
+	function save() {
+   		window.localStorage['history'] = JSON.stringify(history);
+    }
 }

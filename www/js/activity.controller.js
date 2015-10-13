@@ -50,10 +50,10 @@ function ActivityCtrl($ionicPopup, $scope, activityService, historyService) {
         	return '';
         }
         if (activity.type === 'duration') {
-        	return '';
+        	return 'android-time';
         }
         if (activity.type === 'countdown') {
-        	return '';
+        	return 'ios-stopwatch';
         }
         return '';
 	}
@@ -78,8 +78,10 @@ function ActivityCtrl($ionicPopup, $scope, activityService, historyService) {
 				}
 			}]
 		}).then(function(newActivity) {
-			vm.newActivity = {};
-	   		activityService.add(newActivity);
+			if (newActivity.name && newActivity.type) {
+		   		activityService.add(newActivity);
+				vm.newActivity = {};
+		   	}
 	 	});
 	}
 
@@ -88,7 +90,6 @@ function ActivityCtrl($ionicPopup, $scope, activityService, historyService) {
 			title: 'How many '+activity.name+' did you do?',
 			inputType: 'number',
 		}).then(function(res) {
-	   		activity.value = res;
     		historyService.add(activity.name, res);
 	 	});
 	}
@@ -97,7 +98,7 @@ function ActivityCtrl($ionicPopup, $scope, activityService, historyService) {
 		$ionicPopup.alert({
 			title: 'Congratulations!',
 		}).then(function() {
-	   		activity.value = new Date();
+    		historyService.add(activity.name, 1);
 	 	});
 	}
 }
