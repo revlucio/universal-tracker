@@ -9,7 +9,7 @@
 		  <ion-item type="item-text-wrap" ng-repeat="activity in vm.activities track by $index">
 		    <div class="item_description">
 		      <div class="activity_title">
-		        {{vm.getActivityLabel(activity)}}
+		        {{activity.name}}
 		      </div>
 		    </div>
 		    <ion-delete-button class="ion-minus-circled" ng-click="vm.removeItem($index)">

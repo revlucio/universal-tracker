@@ -7,11 +7,47 @@
 </ion-nav-buttons>
   <ion-content class="padding custom-content">
     <ion-list>
-      <ion-item type="item-text-wrap" ng-repeat="activity in vm.activities track by $index">
-        <div class="item_description" ng-click="vm.toggleActivity(activity)">
+      <ion-item ng-repeat="activity in vm.activities track by $index" type="item-text-wrap" ng-class="{'selected': activity.interval != undefined}">
+        <!-- single activity -->
+        <div ng-if="activity.type === 'single'" class="item_description" ng-click="vm.toggleActivity(activity)">
           <div class="activity_title">
-            {{vm.getActivityLabel(activity)}}
-            <i class="ion-{{vm.getActivityIcon(activity)}}"></i>
+            {{activity.name}}
+          </div>
+          <div class="circle right" ng-class="{'duration_seconds_selected': activity.interval != undefined}">
+            1
+          </div>
+        </div>
+
+        <!-- multi activity -->
+        <div ng-if="activity.type === 'multi'" class="item_description" ng-click="vm.toggleActivity(activity)">
+          <div class="activity_title">
+            {{activity.name}}
+          </div>
+          <div class="circle right" ng-class="{'duration_seconds_selected': activity.interval != undefined}">
+            #
+          </div>
+        </div>
+
+        <!-- duration activity -->
+        <div ng-if="activity.type === 'duration'" class="item_description" ng-click="vm.toggleActivity(activity)">
+          <div class="activity_title">{{activity.name}} </div>
+          <div class="activity_duration">
+            <div class="duration_time" ng-class="{'duration_time_selected': activity.interval != undefined}">
+              {{ activity.duration | millisecondsToStringFilter | durationPartFilter}}
+            </div>
+            <div class="circle" ng-class="{'duration_seconds_selected': activity.interval != undefined}">
+              <div class="duration_seconds" ng-show="activity.duration"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- timer activity -->
+        <div ng-if="activity.type === 'countdown'" class="item_description" ng-click="vm.toggleActivity(activity)">
+          <div class="activity_title">
+            {{activity.name}}
+          </div>
+          <div class="circle right" ng-class="{'duration_seconds_selected': activity.interval != undefined}">
+            <i class="ion-ios-stopwatch-outline"></i>
           </div>
         </div>
       </ion-item>

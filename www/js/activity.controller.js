@@ -7,85 +7,80 @@ function ActivityCtrl($ionicPopup, $scope, activityService, historyService) {
 	vm.activities = activityService.getActivities();
 
 	vm.toggleActivity = toggleActivity;
-	vm.getActivityLabel = getActivityLabel;
 	vm.addActivity = addActivity;
 	vm.moveItem = activityService.moveItem;
 	vm.removeItem = activityService.remove;
-	vm.getActivityIcon = getActivityIcon;
+	vm.newActivity = {};
    
 	function toggleActivity(activity) {
-        if (activity.type === 'quantity') {
-        	toggleQuantityActivity(activity);
+        if (activity.type === 'multi') {
+        	logMulti(activity);
         }
         if (activity.type === 'single') {
-        	toggleSingleActivity(activity);
-        }
-	}
-
-	function getActivityLabel(activity) {
-		var prefix = '';
-		if (activity.type === 'quantity') {
-        	prefix = 'I did some ';
-        }
-        if (activity.type === 'single') {
-        	prefix = 'I did a ';
+        	logSingle(activity);
         }
         if (activity.type === 'duration') {
-        	prefix = 'I started ';
+        	logDuration(activity);
         }
         if (activity.type === 'countdown') {
-        	prefix = 'I will start ';
+        	logCountdown(activity);
         }
-
-        if (prefix === '') return '';
-
-		return prefix + activity.name + '!';
-	}
-
-	function getActivityIcon(activity) {
-		if (activity.type === 'quantity') {
-        	return 'checkmark';
-        }
-        if (activity.type === 'single') {
-        	return '';
-        }
-        if (activity.type === 'duration') {
-        	return 'android-time';
-        }
-        if (activity.type === 'countdown') {
-        	return 'ios-stopwatch';
-        }
-        return '';
 	}
 
 	function addActivity() {
-		$ionicPopup.show({
-			title: 'What activity do you want to track?',
-			inputType: 'text',
-			templateUrl: 'templates/popup-add.html',
-			scope: $scope,
-			buttons: [{
-				text: 'Cancel'
-			}, {
-				text: 'Add',
-				type: 'button-positive',
-				onTap: function() {
-					if (!vm.newActivity.name || !vm.newActivity.type) {
-						e.preventDefault();
-					} else {
-						return vm.newActivity;
-					}
-				}
-			}]
-		}).then(function(newActivity) {
-			if (newActivity.name && newActivity.type) {
-		   		activityService.add(newActivity);
-				vm.newActivity = {};
-		   	}
-	 	});
+		$ionicPopup.show(addPopupConfig).then(function() {
+			if (vm.newActivity.name) {
+				$ionicPopup.show(addPopupConfig2).then(function() {
+					if (vm.newActivity.name && vm.newActivity.type) {
+						vm.newActivity.duration = 0;
+				   		activityService.add(vm.newActivity);
+				   	}
+					vm.newActivity = {};
+			   	});
+			}
+ 		});
 	}
 
-	function toggleQuantityActivity(activity) {
+	var addPopupConfig = {
+		title: 'Add a new activity',
+		subTitle: 'What is the name of the activity?',
+		templateUrl: 'templates/popup-name.html',
+		scope: $scope,
+		buttons: [{
+			text: 'Cancel',
+			onTap: function() {
+				vm.newActivity.name = '';
+			}
+		}, {
+			text: 'Next',
+			type: 'button-positive',
+			onTap: function() {
+				if (!vm.newActivity.name) {
+					e.preventDefault();
+				}
+			}
+		}]
+	};
+
+	var addPopupConfig2 = {
+		title: 'Add a new activity',
+		subTitle: 'What is the type of the activity?',
+		templateUrl: 'templates/popup-add.html',
+		scope: $scope,
+		buttons: [{
+			text: 'Cancel'
+		}, {
+			text: 'Add',
+			type: 'button-positive',
+			onTap: function() {
+				if (!vm.newActivity.type) {
+					e.preventDefault();
+				}
+			}
+		}]
+	};
+
+	function logMulti(activity) {
 		$ionicPopup.prompt({
 			title: 'How many '+activity.name+' did you do?',
 			inputType: 'number',
@@ -94,9 +89,25 @@ function ActivityCtrl($ionicPopup, $scope, activityService, historyService) {
 	 	});
 	}
 
-	function toggleSingleActivity(activity) {
+	function logSingle(activity) {
 		$ionicPopup.alert({
-			title: 'Congratulations!',
+			title: 'You have logged a ' + activity.name,
+		}).then(function() {
+    		historyService.add(activity.name, 1);
+	 	});
+	}
+
+	function logDuration(activity) {
+		$ionicPopup.alert({
+			title: 'You have logged a ' + activity.name,
+		}).then(function() {
+    		historyService.add(activity.name, 1);
+	 	});
+	}
+
+	function logCountdown(activity) {
+		$ionicPopup.alert({
+			title: 'You have logged a ' + activity.name,
 		}).then(function() {
     		historyService.add(activity.name, 1);
 	 	});
