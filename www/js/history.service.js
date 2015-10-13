@@ -6,15 +6,16 @@ function historyService() {
 
 	return {
 		getHistory,
-		add
+		add,
+		get: history
 	}
 
 	function getHistory() {
 		return history;
 	}
 
-	function add(event, value) {
-		history.push({event: event, value: value, when: new Date()});
+	function add(event, amount) {
+		history.push({event: event, amount: amount, when: new Date()});
 		save();
 	}
 

@@ -1,9 +1,28 @@
 <ion-view title="HISTORY">
   <ion-content class="padding custom-content">
-    <ion-list>
-      <ion-item type="item-text-wrap" ng-repeat="item in vm.historyItems track by $index">
-        {{item.event}} - {{item.value}} - {{item.when}}
-      </ion-item>
-    </ion-list>
+	
+	<div class="list" ng-repeat="date in vm.dates">	
+      <div class="item item-divider item-center">
+        {{date|humanize}}
+      </div>
+      <a class="item" ng-repeat="item in vm.events[date] track by $index">
+        <div class="item_description" style="width: 90%">
+          <span class="activity_title">{{ item.event }}</span> 
+        </div>
+
+        <div class="item_controls" ng-if="item.duration">
+          <span class="activity_duration history_duration" ng-init="duration=humanizeTime(item.duration)">
+            <b ng-show="duration.hours">{{ duration.hours }}h </b>
+            <b ng-show="duration.minutes">{{ duration.minutes }}m </b>
+            <b>{{ duration.seconds }}s </b>
+          </span>
+        </div>
+        <div class="item_controls" ng-if="item.amount">
+          <span class="activity_duration history_duration">
+            <b>{{item.amount}}</b>
+          </span>
+        </div>
+      </a>
+	</div>
   </ion-content>
 </ion-view>
