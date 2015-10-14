@@ -11,6 +11,15 @@ function ActivityCtrl($ionicPopup, $scope, activityService, historyService, Acti
 	vm.moveItem = activityService.moveItem;
 	vm.removeItem = activityService.remove;
 	vm.newActivity = {};
+
+	vm.activityTypes = [
+		"Coding",
+		"Commuting",
+		"Excercising",
+		"Meditating",
+		"Meetings",
+		"Partying"
+	];
    
 	function toggleActivity(activity) {
         if (activity.type === 'multi') {

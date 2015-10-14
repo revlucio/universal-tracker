@@ -1,1 +1,6 @@
 <input type="text" ng-model="vm.newActivity.name"></input>
+
+<ion-radio ng-repeat="activityType in vm.activityTypes" ng-model="vm.newActivity.name" 
+ng-value="activityType">
+	{{activityType}}
+</ion-radio>
