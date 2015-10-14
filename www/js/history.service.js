@@ -4,31 +4,47 @@ angular.module('tracker')
 function historyService() {
 	var history = JSON.parse(window.localStorage['history'] || '[]');
 	var groupedEvents = {};
-	setGroupedEvents();
 
 	return {
 		get,
 		add,
-		getGroupedEvents
+		getGroupedEvents,
+		getQueue,
+		queueEvent,
+		setGroupedEvents: getGroupedEvents
 	}
+
+    function getQueue() {
+        var queueString = window.localStorage.history;
+        if (queueString) {
+            return angular.fromJson(queueString);
+        } else {
+            return [];
+        }
+    }
+
+    function queueEvent(activity) {
+        var queue = getQueue();
+        queue.push(activity);
+        window.localStorage.history = angular.toJson(queue);
+    }
 
 	function get() {
 		return history;
 	}
 
 	function add(event) {
-		event.when = new Date();
+		event.when = new Date().toISOString();
 		history.push(event);
 		save();
-		setGroupedEvents();
 	}
 
 	function save() {
    		window.localStorage['history'] = JSON.stringify(history);
     }
 
-    function setGroupedEvents() {
-        var events = history;
+    function getGroupedEvents() {
+        var events = getQueue();
         var groups = {};
         events.forEach(function(event) {
             var date = event.when.split('T')[0];
@@ -51,10 +67,6 @@ function historyService() {
 
         });
 
-        groupedEvents = groups;
+        return groups;
     };
-
-    function getGroupedEvents() {
-    	return groupedEvents;
-    }
 }
