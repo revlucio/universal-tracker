@@ -12,7 +12,7 @@ angular.module('tracker')
 
   .run(function($ionicPlatform, AuthenticationService, EventSendService) {
       $ionicPlatform.ready(function() {
-          window.plugin.notification.local.promptForPermission();
+          //window.plugin.notification.local.promptForPermission();
           
           if(AuthenticationService.authenticated()){
               EventSendService.sendEvents();

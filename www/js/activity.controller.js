@@ -4,7 +4,7 @@ angular.module('tracker')
 function ActivityCtrl($ionicPopup, $scope, activityService, historyService, ActivityTimingService, $filter) {
 	var vm = this;
 
-	vm.activities = activityService.get();
+	vm.activities = activityService.getActivities();
 
 	vm.toggleActivity = toggleActivity;
 	vm.addActivity = addActivity;

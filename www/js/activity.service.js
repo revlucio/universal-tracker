@@ -6,7 +6,7 @@ function activityService() {
 
 	return {
 		moveItem,
-		get,
+		getActivities,
 		add,
 		remove
 	};
@@ -17,7 +17,7 @@ function activityService() {
 		save();
     }
 
-    function get() {
+    function getActivities() {
     	return activities;
     }
 

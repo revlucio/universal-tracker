@@ -27,6 +27,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           }
       })
       .state('tab.history', {
+          cache: false,
           url: '/history',
           views: {
               'tab-history': {

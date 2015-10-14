@@ -6,7 +6,7 @@ function historyService() {
 	var groupedEvents = {};
 
 	return {
-		get,
+		getHistory,
 		add,
 		getGroupedEvents,
 		getQueue,
@@ -29,7 +29,7 @@ function historyService() {
         window.localStorage.history = angular.toJson(queue);
     }
 
-	function get() {
+	function getHistory() {
 		return history;
 	}
 
