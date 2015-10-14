@@ -1,7 +1,7 @@
 angular.module('tracker')
-    .service('activityTimingService', activityTimingService);
+    .service('ActivityTimingService', ActivityTimingService);
 
-function activityTimingService(moment, $interval, NotificationService) {
+function ActivityTimingService(moment, $interval, NotificationService) {
     var updateActivity = function(activity, action) {
         var updateActivityTime = function() {
             var elapsedTime = moment.duration(moment().diff(activity.startDate));
@@ -31,13 +31,13 @@ function activityTimingService(moment, $interval, NotificationService) {
 
         toggleActivity = function(){
             if (!activity.interval) {
-                NotificationService.showNotification();
+                // NotificationService.showNotification();
                 activity.startDate = moment();
                 updateActivityTime();
                 activity.interval = $interval(updateActivityTime, 100);
                 storeActiveActivity(activity);
             } else {
-                NotificationService.cancelNotification();
+                // NotificationService.cancelNotification();
                 $interval.cancel(activity.interval);
                 delete activity.interval;
                 removeActiveActivity(activity);

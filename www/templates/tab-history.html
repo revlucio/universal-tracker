@@ -3,7 +3,7 @@
 	
 	<div class="list" ng-repeat="date in vm.dates">	
       <div class="item item-divider item-center">
-        {{date|humanize}}
+        {{ date|humanize }}
       </div>
       <a class="item" ng-repeat="item in vm.events[date] track by $index">
         <div class="item_description" style="width: 90%">
@@ -11,7 +11,7 @@
         </div>
 
         <div class="item_controls" ng-if="item.duration">
-          <span class="activity_duration history_duration" ng-init="duration=humanizeTime(item.duration)">
+          <span class="activity_duration history_duration" ng-init="duration=vm.humanizeTime(item.duration)">
             <b ng-show="duration.hours">{{ duration.hours }}h </b>
             <b ng-show="duration.minutes">{{ duration.minutes }}m </b>
             <b>{{ duration.seconds }}s </b>
@@ -19,7 +19,7 @@
         </div>
         <div class="item_controls" ng-if="item.amount">
           <span class="activity_duration history_duration">
-            <b>{{item.amount}}</b>
+            <b>{{ item.amount }}</b>
           </span>
         </div>
       </a>
