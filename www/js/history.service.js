@@ -11,7 +11,8 @@ function historyService(preferenceService) {
 		getGroupedEvents,
 		getQueue,
 		queueEvent,
-		setGroupedEvents: getGroupedEvents
+		setGroupedEvents: getGroupedEvents,
+        clear
 	}
 
     function getQueue() {
@@ -72,4 +73,9 @@ function historyService(preferenceService) {
 
         return groups;
     };
+
+    function clear() {
+        history = [];
+        window.localStorage.history = [];
+    }
 }

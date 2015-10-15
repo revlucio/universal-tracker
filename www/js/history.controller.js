@@ -7,6 +7,7 @@ function HistoryCtrl(historyService, $filter) {
     vm.events = getEvents();
     vm.dates = Object.keys(getEvents()).sort().reverse();
     vm.humanizeTime = humanizeTime;
+    vm.clearHistory = clearHistory;
 
     function humanizeTime(duration) {
         var tstring = $filter('millisecondsToStringFilter')(duration).split(':');
@@ -42,4 +43,9 @@ function HistoryCtrl(historyService, $filter) {
 
         return groups;
     };
+
+    function clearHistory() {
+        historyService.clear();
+        vm.events = getEvents();
+    }
 }

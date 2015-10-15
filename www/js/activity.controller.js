@@ -174,10 +174,7 @@ function ActivityCtrl(
 			var duration = moment.duration(moment().diff(activity.startDate));
 			historyService.add({event:activity.name, duration:duration.asMilliseconds()});
 
-			activity.remaining = 0;
-
 			activityTimingService.toggleCountdownActivity(activity);
-
 		}
 	}
 }
