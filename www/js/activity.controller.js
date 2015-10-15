@@ -138,6 +138,33 @@ function ActivityCtrl(
     }
 
 	function logCountdown(activity) {
-        var activity = activityTimingService.toggleCountdownActivity(activity);
+		if (!activity.interval) {
+			var durationString = $filter('millisecondsToStringFilter')(activity.duration);
+	        var durationParts = durationString.split(':');
+
+			vm.data = {
+	            duration: {
+	                hours: parseInt(durationParts[0], 10),
+	                minutes: parseInt(durationParts[1], 10),
+	                seconds: parseInt(durationParts[2], 10),
+	                milliseconds: parseInt(durationParts[3], 10)
+	            }
+	        };
+
+			$ionicPopup.show(logDurationConfig).then(function(res) {
+	            activity.duration = res;
+				activity.remaining = activity.duration;
+
+				activityTimingService.toggleCountdownActivity(activity);
+	        });	
+		} else {
+			var duration = moment.duration(moment().diff(activity.startDate));
+			historyService.add({event:activity.name, duration:duration.asMilliseconds()});
+
+			activity.remaining = 0;
+
+			activityTimingService.toggleCountdownActivity(activity);
+
+		}
 	}
 }
