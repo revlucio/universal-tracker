@@ -106,7 +106,10 @@ function ActivityCtrl(
 			title: 'How many '+activity.name+' did you do?',
         	scope: $scope,
         	buttons: [{
-	            text: 'Cancel'
+	            text: 'Cancel',
+	            onTap: function(e) {
+	            	return null;
+	            }
 	        }, {
 	            text: '<b>Log</b>',
 	            type: 'button-positive',
@@ -115,7 +118,7 @@ function ActivityCtrl(
 	            }
 	        }]
 		}).then(function(res) {
-    		historyService.add({event: activity.name, amount: res});
+			if (res) historyService.add({event: activity.name, amount: res});
 	 	});
 	}
 
@@ -144,7 +147,7 @@ function ActivityCtrl(
             };
 
             $ionicPopup.show(logDurationConfig).then(function(res) {
-				historyService.add({event:activity.name, duration:res});
+            	if (res) historyService.add({event:activity.name, duration:res});
 				activity.duration = 0;
             });
         }
@@ -165,16 +168,19 @@ function ActivityCtrl(
 	        };
 
 			$ionicPopup.show(logDurationConfig).then(function(res) {
-	            activity.duration = res;
-				activity.remaining = activity.duration;
+				if (res) {
+		            activity.duration = res;
+					activity.remaining = activity.duration;
 
-				activityTimingService.toggleCountdownActivity(activity);
+					activityTimingService.toggleCountdownActivity(activity);
+				}
 	        });	
 		} else {
 			var duration = moment.duration(moment().diff(activity.startDate));
 			historyService.add({event:activity.name, duration:duration.asMilliseconds()});
 
 			activityTimingService.toggleCountdownActivity(activity);
+			activity.remaining = 0;
 		}
 	}
 }
