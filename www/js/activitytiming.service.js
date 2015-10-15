@@ -3,8 +3,8 @@ angular.module('tracker')
 
 function activityTimingService(moment, $interval, NotificationService, historyService) {
     return {
-        toggleActivity,
-        toggleCountdownActivity
+        toggleActivity: toggleActivity,
+        toggleCountdownActivity: toggleCountdownActivity
     };
 
     function toggleActivity(activity) {

@@ -2,11 +2,11 @@
 <widget id="co.oneself.universaltracker" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>universal-tracker</name>
   <description>
-        An Ionic Framework and Cordova project.
-    </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
-      Ionic Framework Team
-    </author>
+    track all the things!
+  </description>
+  <author email="team@1self.co" href="http://1self.co/">
+    1self Team
+  </author>
   <content src="index.html"/>
   <access origin="*"/>
   <preference name="webviewbounce" value="false"/>
@@ -16,5 +16,18 @@
   <preference name="BackupWebStorage" value="none"/>
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
+  </feature>
+  <preference name="StatusBarOverlaysWebView" value="false"/>
+  <preference name="StatusBarBackgroundColor" value="#00a2d4"/>
+  <preference name="StatusBarStyle" value="lightcontent" />
+  <preference name="target-device" value="handset" />
+  <preference name="orientation" value="portrait" />
+
+  <feature name="InAppBrowser">
+    <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+  </feature>
+
+  <feature name="InAppBrowser">
+    <param name="ios-package" value="CDVInAppBrowser" />
   </feature>
 </widget>

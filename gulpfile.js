@@ -1,13 +1,14 @@
 var gulp = require('gulp');
-var bower = require('gulp-bower')
+//var bower = require('gulp-bower')
 var concat = require('gulp-concat');
-var replace = require('gulp-replace');
-var del = require('del');
-var templateCache = require('gulp-angular-templatecache');
+//var replace = require('gulp-replace');
+//var del = require('del');
+//var templateCache = require('gulp-angular-templatecache');
 var uglify = require('gulp-uglify');
 var ngAnnotate = require('gulp-ng-annotate');
-var minifyCss = require('gulp-minify-css');
-var Server = require('karma').Server;
+var iife = require('gulp-iife');
+//var minifyCss = require('gulp-minify-css');
+//var Server = require('karma').Server;
 
 //========================
 
@@ -15,6 +16,15 @@ var filename = 'app.' + Date.now() + '.';
 var folder = 'dist';
 
 gulp.task('default', ['bower', 'clean:dist', 'build']);
+
+gulp.task('js', function () {
+  gulp.src(['www/js/app.js', 'www/js/**/*.js'])
+      .pipe(concat('app.min.js'))
+      .pipe(ngAnnotate())
+      .pipe(uglify())
+      .pipe(iife())
+      .pipe(gulp.dest('www/dist'));
+});
 
 gulp.task('watch', function() {
   var watcher = gulp.watch(

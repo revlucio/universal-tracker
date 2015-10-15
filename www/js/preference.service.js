@@ -5,8 +5,8 @@ function preferenceService() {
 	var preferences = JSON.parse(window.localStorage.preferences || '{}');
 
 	return {
-		setLastAmountLogged,
-		getLastAmountLogged
+		setLastAmountLogged: setLastAmountLogged,
+		getLastAmountLogged: getLastAmountLogged
 	}
 
 	function setLastAmountLogged(activity, amount) {

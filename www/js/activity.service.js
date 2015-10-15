@@ -5,10 +5,10 @@ function activityService() {
 	var activities = JSON.parse(window.localStorage['activities'] || '[]');
 
 	return {
-		moveItem,
-		getActivities,
-		add,
-		remove
+		moveItem: moveItem,
+		getActivities: getActivities,
+		add: add,
+		remove: remove
 	};
 
 	function moveItem(item, fromIndex, toIndex) {

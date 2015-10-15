@@ -6,13 +6,13 @@ function historyService(preferenceService) {
 	var groupedEvents = {};
 
 	return {
-		getHistory,
-		add,
-		getGroupedEvents,
-		getQueue,
-		queueEvent,
+		getHistory: getHistory,
+		add: add,
+		getGroupedEvents: getGroupedEvents,
+		getQueue: getQueue,
+		queueEvent: queueEvent,
 		setGroupedEvents: getGroupedEvents,
-        clear
+        clear: clear
 	}
 
     function getQueue() {
