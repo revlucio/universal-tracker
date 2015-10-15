@@ -8,7 +8,8 @@ function activityService() {
 		moveItem: moveItem,
 		getActivities: getActivities,
 		add: add,
-		remove: remove
+		remove: remove,
+        getActivityTypes: getActivityTypes
 	};
 
     function loadActivities() {
@@ -22,6 +23,17 @@ function activityService() {
                 { name: 'Meditating', type: 'countdown' }
             ];
         }
+    }
+
+    function getActivityTypes() {
+        return [
+            "Coding",
+            "Commuting",
+            "Excercising",
+            "Meditating",
+            "Meetings",
+            "Partying"
+        ];
     }
 
 	function moveItem(item, fromIndex, toIndex) {

@@ -1,5 +1,5 @@
 angular.module('tracker')
-    .service('NotificationService', NotificationService);
+    .factory('NotificationService', NotificationService);
 
 function NotificationService($ionicPlatform){
     var id = "1";
@@ -13,8 +13,8 @@ function NotificationService($ionicPlatform){
         showNotification: showNotification,
         cancelNotification: cancelNotification
     };
-    
-    var showNotification = function() {
+
+    function showNotification() {
         try {
             $ionicPlatform.ready(function() {
                 count++;
@@ -32,7 +32,7 @@ function NotificationService($ionicPlatform){
         }
     };
 
-    var cancelNotification = function() {
+    function cancelNotification() {
         try {
             $ionicPlatform.ready(function() {
                 count--;

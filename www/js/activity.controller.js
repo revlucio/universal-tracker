@@ -2,10 +2,11 @@ angular.module('tracker')
 	.controller('ActivityCtrl', ActivityCtrl);
 
 function ActivityCtrl(
-	$ionicPopup, $scope, activityService, historyService, activityTimingService, $filter, preferenceService) {
+	$ionicPopup, $scope, activityService, historyService, activityTimingService, $filter, preferenceService, popupService) {
 	var vm = this;
 
 	vm.activities = activityService.getActivities();
+	vm.activityTypes = activityService.getActivityTypes();
 
 	vm.addActivity = addActivity;
 	vm.moveItem = activityService.moveItem;
@@ -16,19 +17,11 @@ function ActivityCtrl(
 	vm.logDuration = logDuration;
 	vm.logCountdown = logCountdown;
 
-	vm.activityTypes = [
-		"Coding",
-		"Commuting",
-		"Excercising",
-		"Meditating",
-		"Meetings",
-		"Partying"
-	];
-
 	function addActivity() {
-		$ionicPopup.show(addPopupConfig).then(function() {
-			if (vm.newActivity.name) {
-				$ionicPopup.show(addPopupConfig2).then(function() {
+		popupService.showAddActivityStep1($scope, function(response) {
+			if (response) {
+				vm.newActivity.name = response;
+				popupService.showAddActivityStep2($scope, function() {
 					if (vm.newActivity.name && vm.newActivity.type) {
 						vm.newActivity.duration = 0;
 						vm.newActivity.remaining = 0;
@@ -39,45 +32,6 @@ function ActivityCtrl(
 			}
  		});
 	}
-
-	var addPopupConfig = {
-		title: 'Add a new activity',
-		subTitle: 'What is the name of the activity?',
-		templateUrl: 'templates/popup-name.html',
-		scope: $scope,
-		buttons: [{
-			text: 'Cancel',
-			onTap: function() {
-				vm.newActivity.name = '';
-			}
-		}, {
-			text: 'Next',
-			type: 'button-positive',
-			onTap: function() {
-				if (!vm.newActivity.name) {
-					e.preventDefault();
-				}
-			}
-		}]
-	};
-
-	var addPopupConfig2 = {
-		title: 'Add a new activity',
-		subTitle: 'What is the type of the activity?',
-		templateUrl: 'templates/popup-add.html',
-		scope: $scope,
-		buttons: [{
-			text: 'Cancel'
-		}, {
-			text: 'Add',
-			type: 'button-positive',
-			onTap: function() {
-				if (!vm.newActivity.type) {
-					e.preventDefault();
-				}
-			}
-		}]
-	};
 
 	var logDurationConfig = {
         templateUrl: 'templates/popup-log-duration.html',
@@ -134,17 +88,7 @@ function ActivityCtrl(
         var activity = activityTimingService.toggleActivity(activity);
 
         if (!activity.interval) {
-            var durationString = $filter('millisecondsToStringFilter')(activity.duration);
-            var durationParts = durationString.split(':');
-
-            vm.data = {
-                duration: {
-                    hours: parseInt(durationParts[0], 10),
-                    minutes: parseInt(durationParts[1], 10),
-                    seconds: parseInt(durationParts[2], 10),
-                    milliseconds: parseInt(durationParts[3], 10)
-                }
-            };
+			vm.data = getDurationSplit(activity);
 
             $ionicPopup.show(logDurationConfig).then(function(res) {
             	if (res) historyService.add({event:activity.name, duration:res});
@@ -153,19 +97,23 @@ function ActivityCtrl(
         }
     }
 
+    function getDurationSplit(activity) {
+    	var durationString = $filter('millisecondsToStringFilter')(activity.duration);
+        var durationParts = durationString.split(':');
+
+		return {
+            duration: {
+                hours: parseInt(durationParts[0], 10),
+                minutes: parseInt(durationParts[1], 10),
+                seconds: parseInt(durationParts[2], 10),
+                milliseconds: parseInt(durationParts[3], 10)
+            }
+        };
+    }
+
 	function logCountdown(activity) {
 		if (!activity.interval) {
-			var durationString = $filter('millisecondsToStringFilter')(activity.duration);
-	        var durationParts = durationString.split(':');
-
-			vm.data = {
-	            duration: {
-	                hours: parseInt(durationParts[0], 10),
-	                minutes: parseInt(durationParts[1], 10),
-	                seconds: parseInt(durationParts[2], 10),
-	                milliseconds: parseInt(durationParts[3], 10)
-	            }
-	        };
+			vm.data = getDurationSplit(activity);
 
 			$ionicPopup.show(logDurationConfig).then(function(res) {
 				if (res) {

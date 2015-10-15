@@ -9,13 +9,13 @@ function activityTimingService(moment, $interval, NotificationService, historySe
 
     function toggleActivity(activity) {
         if (!activity.interval) {
-            // NotificationService.showNotification();
+            NotificationService.showNotification();
             activity.startDate = moment();
             updateActivityTime();
             activity.interval = $interval(updateActivityTime, 100);
             storeActiveActivity(activity);
         } else {
-            // NotificationService.cancelNotification();
+            NotificationService.cancelNotification();
             $interval.cancel(activity.interval);
             delete activity.interval;
             removeActiveActivity(activity);
