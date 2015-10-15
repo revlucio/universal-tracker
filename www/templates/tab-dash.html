@@ -43,11 +43,15 @@
 
         <!-- timer activity -->
         <div ng-if="activity.type === 'countdown'" class="item_description" ng-click="vm.toggleActivity(activity)">
-          <div class="activity_title">
-            {{activity.name}}
-          </div>
-          <div class="circle right" ng-class="{'duration_seconds_selected': activity.interval != undefined}">
-            <i class="ion-ios-stopwatch-outline"></i>
+          <div class="activity_title">{{activity.name}} </div>
+          <div class="activity_duration">
+            <div class="duration_time" ng-class="{'duration_time_selected': activity.interval != undefined}">
+              {{ activity.duration | millisecondsToStringFilter | durationPartFilter}}
+            </div>
+            <div class="circle" ng-class="{'duration_seconds_selected': activity.interval != undefined}">
+              <i class="ion-ios-stopwatch-outline"></i>
+              <div class="duration_seconds" ng-show="activity.duration"></div>
+            </div>
           </div>
         </div>
       </ion-item>

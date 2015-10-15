@@ -1,7 +1,7 @@
 angular.module('tracker')
 	.factory('historyService', historyService);
 
-function historyService() {
+function historyService(preferenceService) {
 	var history = JSON.parse(window.localStorage['history'] || '[]');
 	var groupedEvents = {};
 
@@ -37,6 +37,9 @@ function historyService() {
 		event.when = new Date().toISOString();
 		history.push(event);
 		save();
+		if (event.amount) {
+            preferenceService.setLastAmountLogged(event.event, event.amount);
+        }
 	}
 
 	function save() {

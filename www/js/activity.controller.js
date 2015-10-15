@@ -1,7 +1,9 @@
 angular.module('tracker')
 	.controller('ActivityCtrl', ActivityCtrl);
 
-function ActivityCtrl($ionicPopup, $scope, activityService, historyService, ActivityTimingService, $filter) {
+function ActivityCtrl(
+	$ionicPopup, $scope, activityService, historyService, ActivityTimingService, $filter) {
+	
 	var vm = this;
 
 	vm.activities = activityService.getActivities();
@@ -89,6 +91,25 @@ function ActivityCtrl($ionicPopup, $scope, activityService, historyService, Acti
 		}]
 	};
 
+	var logDurationConfig = {
+        templateUrl: 'templates/popup-log-duration.html',
+        title: 'Edit duration',
+        subTitle: 'Please confirm the time to log',
+        scope: $scope,
+        buttons: [{
+            text: 'Cancel',
+            onTap: function(e) {
+                activity.duration = 0;
+            }
+        }, {
+            text: '<b>Log</b>',
+            type: 'button-positive',
+            onTap: function(e) {
+                return vm.data.duration.hours * 3600000 + vm.data.duration.minutes * 60000 + vm.data.duration.seconds * 1000 + vm.data.duration.milliseconds;
+            }
+        }, ]
+    };
+
 	function logMulti(activity) {
 		$ionicPopup.prompt({
 			title: 'How many '+activity.name+' did you do?',
@@ -113,42 +134,18 @@ function ActivityCtrl($ionicPopup, $scope, activityService, historyService, Acti
             var durationString = $filter('millisecondsToStringFilter')(activity.duration);
             var durationParts = durationString.split(':');
 
-            vm.showEditPopup = function() {
-                vm.data = {
-                    duration: {
-                        hours: parseInt(durationParts[0], 10),
-                        minutes: parseInt(durationParts[1], 10),
-                        seconds: parseInt(durationParts[2], 10),
-                        milliseconds: parseInt(durationParts[3], 10)
-                    }
-                };
-
-                var editPopupTemplate = 'Hours : Minutes : Seconds<br><input type="number" size="2" min="0" ng-model="vm.data.duration.hours"/><input type="number" size="2" min="0" max="60" ng-model="vm.data.duration.minutes"/><input type="number" size="2" min="0" max="60" ng-model="vm.data.duration.seconds"/>';
-
-                var editPopup = $ionicPopup.show({
-                    template: editPopupTemplate,
-                    title: 'Edit duration',
-                    subTitle: 'Please confirm the time to log',
-                    scope: $scope,
-                    buttons: [{
-                        text: 'Cancel',
-                        onTap: function(e) {
-                            activity.duration = 0;
-                        }
-                    }, {
-                        text: '<b>Log</b>',
-                        type: 'button-positive',
-                        onTap: function(e) {
-                            return vm.data.duration.hours * 3600000 + vm.data.duration.minutes * 60000 + vm.data.duration.seconds * 1000 + vm.data.duration.milliseconds;
-                        }
-                    }, ]
-                });
-                editPopup.then(function(res) {
-    				historyService.add({event:activity.name, duration:res});
-                });
+            vm.data = {
+                duration: {
+                    hours: parseInt(durationParts[0], 10),
+                    minutes: parseInt(durationParts[1], 10),
+                    seconds: parseInt(durationParts[2], 10),
+                    milliseconds: parseInt(durationParts[3], 10)
+                }
             };
 
-            vm.showEditPopup();
+            $ionicPopup.show(logDurationConfig).then(function(res) {
+				historyService.add({event:activity.name, duration:res});
+            });
         }
     }
 

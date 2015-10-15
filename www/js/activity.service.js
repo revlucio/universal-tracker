@@ -2,7 +2,7 @@ angular.module('tracker')
 	.factory('activityService', activityService);
 
 function activityService() {
-	var activities = JSON.parse(window.localStorage['activities'] || '[]');;
+	var activities = JSON.parse(window.localStorage['activities'] || '[]');
 
 	return {
 		moveItem,

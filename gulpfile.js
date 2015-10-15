@@ -1,52 +1,81 @@
 var gulp = require('gulp');
-var gutil = require('gulp-util');
-var bower = require('bower');
+var bower = require('gulp-bower')
 var concat = require('gulp-concat');
-var sass = require('gulp-sass');
+var replace = require('gulp-replace');
+var del = require('del');
+var templateCache = require('gulp-angular-templatecache');
+var uglify = require('gulp-uglify');
+var ngAnnotate = require('gulp-ng-annotate');
 var minifyCss = require('gulp-minify-css');
-var rename = require('gulp-rename');
-var sh = require('shelljs');
+var Server = require('karma').Server;
 
-var paths = {
-  sass: ['./scss/**/*.scss']
-};
+//========================
 
-gulp.task('default', ['sass']);
+var filename = 'app.' + Date.now() + '.';
+var folder = 'dist';
 
-gulp.task('sass', function(done) {
-  gulp.src('./scss/ionic.app.scss')
-    .pipe(sass({
-      errLogToConsole: true
-    }))
-    .pipe(gulp.dest('./www/css/'))
-    .pipe(minifyCss({
-      keepSpecialComments: 0
-    }))
-    .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest('./www/css/'))
-    .on('end', done);
-});
+gulp.task('default', ['bower', 'clean:dist', 'build']);
 
 gulp.task('watch', function() {
-  gulp.watch(paths.sass, ['sass']);
+  var watcher = gulp.watch(
+    [
+      'src/scripts/**/*.js',
+      'src/css/**/*.css',
+      'src/partials/**/*.html',
+      'src/index.html'
+    ], ['test', 'clean:dist','build']);
+  watcher.on('change', function(event) {
+    console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+  });  
 });
 
-gulp.task('install', ['git-check'], function() {
-  return bower.commands.install()
-    .on('log', function(data) {
-      gutil.log('bower', gutil.colors.cyan(data.id), data.message);
-    });
+gulp.task('bower', function() {
+  return bower()
 });
 
-gulp.task('git-check', function(done) {
-  if (!sh.which('git')) {
-    console.log(
-      '  ' + gutil.colors.red('Git is not installed.'),
-      '\n  Git, the version control system, is required to download Ionic.',
-      '\n  Download git here:', gutil.colors.cyan('http://git-scm.com/downloads') + '.',
-      '\n  Once git is installed, run \'' + gutil.colors.cyan('gulp install') + '\' again.'
-    );
-    process.exit(1);
-  }
-  done();
+
+gulp.task('build', function() {
+
+  gulp.src('src/partials/**/*.html')
+    .pipe(templateCache("templates.js", {module: "webapp", root: "partials/"}))
+    .pipe(gulp.dest(folder));
+
+  gulp.src([
+    'bower_components/angular/angular.js', 
+    'bower_components/angular-ui-router/release/angular-ui-router.min.js',
+    'bower_components/angular-mocks/angular-mocks.js', 
+    'src/scripts/module.js',
+    'src/scripts/**/*.js'])
+      .pipe(concat(filename + 'js'))
+      .pipe(ngAnnotate())
+      .pipe(uglify())
+      .pipe(gulp.dest(folder));
+
+  gulp.src([
+    'bower_components/bootstrap/dist/css/bootstrap.css', 
+    'src/css/**/*.css'])
+      .pipe(concat(filename + 'css'))
+      .pipe(minifyCss())
+      .pipe(gulp.dest(folder));
+
+  gulp.src('src/index.html')
+    .pipe(replace('app.', filename))
+    .pipe(gulp.dest(folder));
+});
+
+gulp.task('test', ['bower'], function (done) {
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
+});
+
+gulp.task('tdd', function (done) {
+  new Server({
+    configFile: __dirname + '/karma.conf.js'
+  }, done).start();
+});
+
+gulp.task('clean:dist', function() {
+  return del([folder], {force:true});
 });
