@@ -20,8 +20,8 @@ gulp.task('default', ['bower', 'clean:dist', 'build']);
 gulp.task('js', function () {
   gulp.src(['www/js/app.js', 'www/js/**/*.js'])
       .pipe(concat('app.min.js'))
-      .pipe(ngAnnotate())
-      .pipe(uglify())
+      //.pipe(ngAnnotate())
+      //.pipe(uglify())
       .pipe(iife())
       .pipe(gulp.dest('www/dist'));
 });

@@ -2,7 +2,7 @@ angular.module('tracker')
 	.factory('activityService', activityService);
 
 function activityService() {
-	var activities = JSON.parse(window.localStorage['activities'] || '[]');
+    var activities = loadActivities();
 
 	return {
 		moveItem: moveItem,
@@ -11,6 +11,19 @@ function activityService() {
 		remove: remove
 	};
 
+    function loadActivities() {
+        if (window.localStorage.activities) {
+            return JSON.parse(window.localStorage.activities);
+        } else {
+            return [
+                { name: 'Push ups', type: 'multi' },
+                { name: 'Drank a coffee', type: 'single' },
+                { name: 'Commuting', type: 'duration', duration: 0 },
+                { name: 'Meditating', type: 'countdown' }
+            ];
+        }
+    }
+
 	function moveItem(item, fromIndex, toIndex) {
     	activities.splice(fromIndex, 1);
     	activities.splice(toIndex, 0, item);
@@ -18,7 +31,7 @@ function activityService() {
     }
 
     function getActivities() {
-    	return activities;
+        return activities;
     }
 
     function add(activity) {
@@ -32,6 +45,6 @@ function activityService() {
     }
 
     function save() {
-   		window.localStorage['activities'] = JSON.stringify(activities);
+   		window.localStorage.activities = JSON.stringify(activities);
     }
 }
