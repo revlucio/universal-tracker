@@ -2,17 +2,19 @@ angular.module('tracker')
 	.controller('ActivityCtrl', ActivityCtrl);
 
 function ActivityCtrl(
-	$ionicPopup, $scope, activityService, historyService, ActivityTimingService, $filter) {
-	
+	$ionicPopup, $scope, activityService, historyService, activityTimingService, $filter) {
 	var vm = this;
 
 	vm.activities = activityService.getActivities();
 
-	vm.toggleActivity = toggleActivity;
 	vm.addActivity = addActivity;
 	vm.moveItem = activityService.moveItem;
 	vm.removeItem = activityService.remove;
 	vm.newActivity = {};
+	vm.logSingle = logSingle;
+	vm.logMulti = logMulti;
+	vm.logDuration = logDuration;
+	vm.logCountdown = logCountdown;
 
 	vm.activityTypes = [
 		"Coding",
@@ -22,21 +24,6 @@ function ActivityCtrl(
 		"Meetings",
 		"Partying"
 	];
-   
-	function toggleActivity(activity) {
-        if (activity.type === 'multi') {
-        	logMulti(activity);
-        }
-        if (activity.type === 'single') {
-        	logSingle(activity);
-        }
-        if (activity.type === 'duration') {
-        	logDuration(activity);
-        }
-        if (activity.type === 'countdown') {
-        	logCountdown(activity);
-        }
-	}
 
 	function addActivity() {
 		$ionicPopup.show(addPopupConfig).then(function() {
@@ -99,7 +86,7 @@ function ActivityCtrl(
         buttons: [{
             text: 'Cancel',
             onTap: function(e) {
-                activity.duration = 0;
+                //activity.duration = 0;
             }
         }, {
             text: '<b>Log</b>',
@@ -128,7 +115,7 @@ function ActivityCtrl(
 	}
 
 	function logDuration(activity) {
-        var activity = ActivityTimingService.updateActivity(activity, "toggle");
+        var activity = activityTimingService.toggleActivity(activity);
 
         if (!activity.interval) {
             var durationString = $filter('millisecondsToStringFilter')(activity.duration);
@@ -145,14 +132,12 @@ function ActivityCtrl(
 
             $ionicPopup.show(logDurationConfig).then(function(res) {
 				historyService.add({event:activity.name, duration:res});
+				activity.duration = 0;
             });
         }
     }
 
 	function logCountdown(activity) {
-		$ionicPopup.alert({
-			title: 'You have logged a ' + activity.name,
-		}).then(function() {
-	 	});
+        var activity = activityTimingService.toggleCountdownActivity(activity);
 	}
 }

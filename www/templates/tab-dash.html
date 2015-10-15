@@ -9,7 +9,7 @@
     <ion-list>
       <ion-item ng-repeat="activity in vm.activities track by $index" type="item-text-wrap" ng-class="{'selected': activity.interval != undefined}">
         <!-- single activity -->
-        <div ng-if="activity.type === 'single'" class="item_description" ng-click="vm.toggleActivity(activity)">
+        <div ng-if="activity.type === 'single'" class="item_description" ng-click="vm.logSingle(activity)">
           <div class="activity_title">
             {{activity.name}}
           </div>
@@ -19,7 +19,7 @@
         </div>
 
         <!-- multi activity -->
-        <div ng-if="activity.type === 'multi'" class="item_description" ng-click="vm.toggleActivity(activity)">
+        <div ng-if="activity.type === 'multi'" class="item_description" ng-click="vm.logMulti(activity)">
           <div class="activity_title">
             {{activity.name}}
           </div>
@@ -29,7 +29,7 @@
         </div>
 
         <!-- duration activity -->
-        <div ng-if="activity.type === 'duration'" class="item_description" ng-click="vm.toggleActivity(activity)">
+        <div ng-if="activity.type === 'duration'" class="item_description" ng-click="vm.logDuration(activity)">
           <div class="activity_title">{{activity.name}} </div>
           <div class="activity_duration">
             <div class="duration_time" ng-class="{'duration_time_selected': activity.interval != undefined}">
@@ -42,7 +42,7 @@
         </div>
 
         <!-- timer activity -->
-        <div ng-if="activity.type === 'countdown'" class="item_description" ng-click="vm.toggleActivity(activity)">
+        <div ng-if="activity.type === 'countdown'" class="item_description" ng-click="vm.logCountdown(activity)">
           <div class="activity_title">{{activity.name}} </div>
           <div class="activity_duration">
             <div class="duration_time" ng-class="{'duration_time_selected': activity.interval != undefined}">
