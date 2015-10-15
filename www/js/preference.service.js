@@ -18,7 +18,7 @@ function preferenceService() {
 
 	function getLastAmountLogged(activity) {
 		if (!preferences.lastAmountLogged || !preferences.lastAmountLogged[activity]) {
-			return null;
+			return 0;
 		}
 
 		return preferences.lastAmountLogged[activity];

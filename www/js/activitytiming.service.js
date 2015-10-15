@@ -1,7 +1,7 @@
 angular.module('tracker')
     .service('activityTimingService', activityTimingService);
 
-function activityTimingService(moment, $interval, NotificationService) {
+function activityTimingService(moment, $interval, NotificationService, historyService) {
     return {
         toggleActivity,
         toggleCountdownActivity
@@ -25,10 +25,6 @@ function activityTimingService(moment, $interval, NotificationService) {
             var elapsedTime = moment.duration(moment().diff(activity.startDate));
             activity.duration = elapsedTime.asMilliseconds();
         };
-
-        
-
-        
 
         function updateActiveActivity() {
             var active_activities = getActiveActivities();
@@ -61,8 +57,17 @@ function activityTimingService(moment, $interval, NotificationService) {
         }
 
         function updateActivityTime() {
-            var timeRemaining = moment.duration(moment(activity.endDate).diff(moment()));
-            activity.remaining = timeRemaining.asMilliseconds();
+            if (activity.remaining > 100) {
+                var timeRemaining = moment.duration(moment(activity.endDate).diff(moment()));
+                activity.remaining = timeRemaining.asMilliseconds();
+            } else {
+                var duration = moment.duration(moment().diff(activity.startDate));
+                historyService.add({event:activity.name, duration:duration.asMilliseconds()});
+
+                $interval.cancel(activity.interval);
+                delete activity.interval;
+                removeActiveActivity(activity);
+            }
         };
     }
 

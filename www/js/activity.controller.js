@@ -2,7 +2,7 @@ angular.module('tracker')
 	.controller('ActivityCtrl', ActivityCtrl);
 
 function ActivityCtrl(
-	$ionicPopup, $scope, activityService, historyService, activityTimingService, $filter) {
+	$ionicPopup, $scope, activityService, historyService, activityTimingService, $filter, preferenceService) {
 	var vm = this;
 
 	vm.activities = activityService.getActivities();
@@ -31,6 +31,7 @@ function ActivityCtrl(
 				$ionicPopup.show(addPopupConfig2).then(function() {
 					if (vm.newActivity.name && vm.newActivity.type) {
 						vm.newActivity.duration = 0;
+						vm.newActivity.remaining = 0;
 				   		activityService.add(vm.newActivity);
 				   	}
 					vm.newActivity = {};
@@ -94,13 +95,25 @@ function ActivityCtrl(
             onTap: function(e) {
                 return vm.data.duration.hours * 3600000 + vm.data.duration.minutes * 60000 + vm.data.duration.seconds * 1000 + vm.data.duration.milliseconds;
             }
-        }, ]
+        }]
     };
 
 	function logMulti(activity) {
-		$ionicPopup.prompt({
+		vm.amount = preferenceService.getLastAmountLogged(activity.name);
+
+		$ionicPopup.show({
+        	templateUrl: 'templates/popup-logmulti.html',
 			title: 'How many '+activity.name+' did you do?',
-			inputType: 'number',
+        	scope: $scope,
+        	buttons: [{
+	            text: 'Cancel'
+	        }, {
+	            text: '<b>Log</b>',
+	            type: 'button-positive',
+	            onTap: function(e) {
+	                return vm.amount;
+	            }
+	        }]
 		}).then(function(res) {
     		historyService.add({event: activity.name, amount: res});
 	 	});
