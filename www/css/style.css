@@ -146,3 +146,11 @@ body.platform-ios .bar-stable .buttons.right-buttons {
 input[type="text"] {
 	padding: 5px;
 }
+
+.add-button {
+    font-size:48px; 
+    z-index: 12 !important;
+    position: absolute !important; 
+    bottom: 10px !important;
+    right: 10px !important;
+}

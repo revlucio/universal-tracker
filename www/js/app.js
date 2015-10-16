@@ -1,5 +1,5 @@
 angular.module('tracker', 
-    ['ionic', 'ngAnimate', 'ngTouch','ngCordova', 'angularMoment']);
+    ['ionic', 'ngAnimate', 'ngTouch','ngCordova', 'angularMoment', 'ngMaterial']);
 
 angular.module('tracker')
   .constant("API", {
