@@ -9,7 +9,8 @@ function activityService() {
 		getActivities: getActivities,
 		add: add,
 		remove: remove,
-        getActivityTypes: getActivityTypes
+        getActivityTypes: getActivityTypes,
+        getActionTags: getActionTags
 	};
 
     function loadActivities() {
@@ -34,6 +35,10 @@ function activityService() {
             "Meetings",
             "Partying"
         ];
+    }
+
+    function getActionTags() {
+        return [];
     }
 
 	function moveItem(item, fromIndex, toIndex) {

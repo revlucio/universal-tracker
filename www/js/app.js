@@ -4,8 +4,8 @@ angular.module('tracker',
 angular.module('tracker')
   .constant("API", {
       endpoint: "https://api.1self.co",
-      "appName": "co.1self.duration",
-      "appVersion": "1.1.4",
+      "appName": "com.1self.universaltracker",
+      "appVersion": "1.0.0",
       "appId": "",
       "appSecret": ""
   })
