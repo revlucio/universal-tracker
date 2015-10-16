@@ -4,10 +4,10 @@ angular.module('tracker',
 angular.module('tracker')
   .constant("API", {
       endpoint: "https://api.1self.co",
-      "appName": "com.1self.universaltracker",
-      "appVersion": "1.0.0",
-      "appId": "",
-      "appSecret": ""
+      appName: "co.1self.universaltracker",
+      appVersion: "0.0.1",
+      appId: "app-id-556d18e5ed9e4e67343332987f73a360",
+      appSecret: "app-secret-0f5d09051e0bda5869e1a866bb4bc62afe30ae70fc8be92313a6e25ecc7d07db"
   })
 
   .run(function($ionicPlatform, AuthenticationService, EventSendService) {

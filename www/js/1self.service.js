@@ -1,15 +1,8 @@
 angular.module('tracker')
 	.factory('oneSelfService', oneSelfService);
 
-function oneSelfService() {
-	var config = {
-        appId: "app-id-2ce584ae4feb02d056bf92c83c4a643e",
-        appSecret: "app-secret-c798c1120a9e56ec047da064431c75da1619efb58c00f4ab0611e2f3c6fd62f8",
-        "appName": "co.1self.universaltracker",
-        "appVersion": "0.0.1"
-    };
-
-    var lib1self = new Lib1selfClient(config, "sandbox");
+function oneSelfService(API) {
+    var lib1self = new Lib1selfClient(API, "sandbox");
 
     var stream;
     lib1self.fetchStream(function(err, response) {
@@ -23,8 +16,8 @@ function oneSelfService() {
 
 	function sendEventToApi(event) {
 		var eventToLog = {
-            "source": config.appName,
-            "version": config.appVersion,
+            "source": API.appName,
+            "version": API.appVersion,
             "objectTags": ["self"],
             "actionTags": event.event,
             "properties": {
