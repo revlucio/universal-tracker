@@ -45,12 +45,14 @@ function activityTimingService(moment, $interval, NotificationService, historySe
 
     function toggleCountdownActivity(activity) {
         if (!activity.interval) {
+            NotificationService.showNotification();
             activity.startDate = moment();
             activity.endDate = moment().add(activity.duration, 'ms');
             updateActivityTime();
             activity.interval = $interval(updateActivityTime, 100);
             storeActiveActivity(activity);
         } else {
+            NotificationService.cancelNotification();
             $interval.cancel(activity.interval);
             delete activity.interval;
             removeActiveActivity(activity);
