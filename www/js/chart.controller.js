@@ -4,5 +4,5 @@ angular.module('tracker')
 function ChartCtrl(oneSelfService) {
 	var vm = this;
 
-    alert(oneSelfService.getChartUrl(["Coding"]));
+	window.open(oneSelfService.getChartUrl(["Coding"]), '_system', 'location=no');
 }

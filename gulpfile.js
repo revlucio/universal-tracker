@@ -1,21 +1,19 @@
 var gulp = require('gulp');
 //var bower = require('gulp-bower')
 var concat = require('gulp-concat');
-//var replace = require('gulp-replace');
-//var del = require('del');
-//var templateCache = require('gulp-angular-templatecache');
+var templateCache = require('gulp-angular-templatecache');
 var uglify = require('gulp-uglify');
 var ngAnnotate = require('gulp-ng-annotate');
 var iife = require('gulp-iife');
-//var minifyCss = require('gulp-minify-css');
+var minifyCss = require('gulp-minify-css');
 //var Server = require('karma').Server;
 
 //========================
 
 var filename = 'app.' + Date.now() + '.';
-var folder = 'dist';
+var folder = 'www/dist';
 
-gulp.task('default', ['bower', 'clean:dist', 'build']);
+gulp.task('default', ['watch']);
 
 gulp.task('js', function () {
   gulp.src(['www/js/app.js', 'www/js/**/*.js'])
@@ -23,54 +21,58 @@ gulp.task('js', function () {
       //.pipe(ngAnnotate())
       //.pipe(uglify())
       .pipe(iife())
-      .pipe(gulp.dest('www/dist'));
+      .pipe(gulp.dest(folder));
+});
+
+gulp.task('css', function() {
+  gulp.src('www/css/**/*.css')
+    .pipe(concat('app.min.css'))
+    .pipe(minifyCss())
+    .pipe(gulp.dest(folder));
+});
+
+gulp.task('html', function() {
+  gulp.src('www/templates/**/*.html')
+    .pipe(templateCache("templates.js", {module: "tracker", root: "templates/"}))
+    .pipe(gulp.dest(folder));
 });
 
 gulp.task('watch', function() {
-  var watcher = gulp.watch(
-    [
-      'src/scripts/**/*.js',
-      'src/css/**/*.css',
-      'src/partials/**/*.html',
-      'src/index.html'
-    ], ['test', 'clean:dist','build']);
-  watcher.on('change', function(event) {
-    console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-  });  
+  var watcher = gulp.watch(['www/js/**/*.js'], ['js']);
 });
+
+gulp.task('vendor', function () {
+  gulp.src([
+    'www/lib/ionic/release/js/ionic.bundle.min.js', 
+    'www/lib/moment/moment.js',
+    'www/lib/angular-moment/angular-moment.js',
+    'www/lib/ngCordova/dist/ng-cordova.min.js',
+    'www/lib/angular-touch/angular-touch.min.js',
+    'www/lib/lodash/lodash.min.js',
+    'www/lib/angular-material/angular-material.min.js',
+    'www/lib/angular-animate/angular-animate.min.js',
+    'www/lib/angular-aria/angular-aria.min.js',
+    'www/1self/1self.js'])
+      .pipe(concat('vendor.min.js'))
+      .pipe(ngAnnotate())
+      .pipe(uglify())
+      //.pipe(iife())
+      .pipe(gulp.dest(folder));
+
+  gulp.src([
+    'www/lib/ionic/release/css/ionic.min.css',
+    'www/lib/ionicons/css/ionicons.min.css',
+    'www/lib/angular-material/angular-material.min.css',
+    'www/lib/angular-material/angular-material.layouts.min.css'])
+      .pipe(concat('vendor.min.css'))
+      .pipe(minifyCss())  
+      .pipe(gulp.dest(folder));
+});
+
+
 
 gulp.task('bower', function() {
   return bower()
-});
-
-
-gulp.task('build', function() {
-
-  gulp.src('src/partials/**/*.html')
-    .pipe(templateCache("templates.js", {module: "webapp", root: "partials/"}))
-    .pipe(gulp.dest(folder));
-
-  gulp.src([
-    'bower_components/angular/angular.js', 
-    'bower_components/angular-ui-router/release/angular-ui-router.min.js',
-    'bower_components/angular-mocks/angular-mocks.js', 
-    'src/scripts/module.js',
-    'src/scripts/**/*.js'])
-      .pipe(concat(filename + 'js'))
-      .pipe(ngAnnotate())
-      .pipe(uglify())
-      .pipe(gulp.dest(folder));
-
-  gulp.src([
-    'bower_components/bootstrap/dist/css/bootstrap.css', 
-    'src/css/**/*.css'])
-      .pipe(concat(filename + 'css'))
-      .pipe(minifyCss())
-      .pipe(gulp.dest(folder));
-
-  gulp.src('src/index.html')
-    .pipe(replace('app.', filename))
-    .pipe(gulp.dest(folder));
 });
 
 gulp.task('test', ['bower'], function (done) {
@@ -84,8 +86,4 @@ gulp.task('tdd', function (done) {
   new Server({
     configFile: __dirname + '/karma.conf.js'
   }, done).start();
-});
-
-gulp.task('clean:dist', function() {
-  return del([folder], {force:true});
 });

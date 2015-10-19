@@ -6,6 +6,7 @@ function activityTimingService(moment, $interval, NotificationService, historySe
         toggleActivity: toggleActivity,
         toggleCountdownActivity: toggleCountdownActivity
     };
+    
 
     function toggleActivity(activity) {
         if (!activity.interval) {

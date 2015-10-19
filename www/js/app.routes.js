@@ -37,6 +37,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           }
       })
       .state('tab.charts', {
+          cache: false,
           url: '/charts',
           views: {
               'tab-charts': {
