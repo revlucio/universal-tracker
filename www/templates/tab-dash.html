@@ -10,7 +10,7 @@
           <div class="activity_title">
             {{activity.name}}
           </div>
-          <div class="circle right" ng-class="{'duration_seconds_selected': activity.interval != undefined}">
+          <div class="circle right">
             1
           </div>
         </div>
@@ -20,7 +20,7 @@
           <div class="activity_title">
             {{activity.name}}
           </div>
-          <div class="circle right" ng-class="{'duration_seconds_selected': activity.interval != undefined}">
+          <div class="circle right">
             #
           </div>
         </div>
@@ -55,6 +55,6 @@
   </ion-content>
 
   <md-button class="md-fab md-primary add-button" aria-label="Add activitiy" ng-click="vm.addActivity()">
-    <i style="font-size:28px" class="ion-plus"></i>
+    <i class="ion-plus"></i>
   </md-button>
 </ion-view>
