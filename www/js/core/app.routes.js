@@ -22,7 +22,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           views: {
               'tab-dash': {
                   templateUrl: 'templates/tab-dash-edit.html',
-                  controller: 'ActivityCtrl as vm'
+                  controller: 'DashboardEditCtrl as vm'
               }
           }
       })

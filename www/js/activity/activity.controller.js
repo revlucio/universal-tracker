@@ -8,26 +8,34 @@ function ActivityCtrl(
 	var vm = this;
 
 	vm.activities = activityService.getActivities();
-	vm.activityTypes = activityService.getActivityTypes();
 
 	vm.addActivity = addActivity;
-	vm.moveItem = activityService.moveItem;
-	vm.removeItem = activityService.remove;
 	vm.newActivity = {};
+	
 	vm.logSingle = logSingle;
 	vm.logMulti = logMulti;
 	vm.logDuration = logDuration;
 	vm.logCountdown = logCountdown;
 
 	function addActivity() {
-		popupService.showAddActivityStep1($scope, function(response) {
-			if (response) {
-				vm.newActivity.name = response;
-				popupService.showAddActivityStep2($scope, function() {
-					if (vm.newActivity.name && vm.newActivity.type) {
-						vm.newActivity.duration = 0;
-						vm.newActivity.remaining = 0;
-				   		activityService.add(vm.newActivity);
+		popupService.showAddActivityStep1(function(newActivity1) {
+			if (newActivity1) {
+				popupService.showAddActivityStep2(newActivity1, function(newActivity) {
+					if (newActivity.type === 'countdown') {
+						newActivity.duration = 0;
+						vm.data = getDurationSplit(newActivity);
+
+						$ionicPopup.show(logDurationConfig).then(function(res) {
+							if (res) {
+					            newActivity.duration = res;
+								newActivity.remaining = res;
+								activityService.add(newActivity);
+							}
+				        });	
+					} else if (newActivity.name && newActivity.type) {
+						newActivity.duration = 0;
+						newActivity.remaining = 0;
+				   		activityService.add(newActivity);
 				   	}
 					vm.newActivity = {};
 			   	});
@@ -115,22 +123,13 @@ function ActivityCtrl(
 
 	function logCountdown(activity) {
 		if (!activity.interval) {
-			vm.data = getDurationSplit(activity);
-
-			$ionicPopup.show(logDurationConfig).then(function(res) {
-				if (res) {
-		            activity.duration = res;
-					activity.remaining = activity.duration;
-
-					activityTimingService.toggleCountdownActivity(activity);
-				}
-	        });	
+			activityTimingService.toggleCountdownActivity(activity);
 		} else {
 			var duration = moment.duration(moment().diff(activity.startDate));
 			historyService.add({event:activity.name, duration:duration.asMilliseconds()});
 
 			activityTimingService.toggleCountdownActivity(activity);
-			activity.remaining = 0;
+			activity.remaining = activity.duration;
 		}
 	}
 }

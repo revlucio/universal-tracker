@@ -15,7 +15,7 @@ function NotificationService($ionicPlatform){
     };
 
     function showNotification() {
-        try {
+        if (window.plugin) {
             $ionicPlatform.ready(function() {
                 count++;
                 id = window.plugin.notification.local.add({
@@ -27,13 +27,11 @@ function NotificationService($ionicPlatform){
                     badge: count
                 });
             });
-        } catch (e) {
-            console.error(new Error(e));
         }
     };
 
     function cancelNotification() {
-        try {
+        if (window.plugin) {
             $ionicPlatform.ready(function() {
                 count--;
                 if (count === 0) {
@@ -49,8 +47,6 @@ function NotificationService($ionicPlatform){
                         badge: count});
                 }
             });
-        } catch (e) {
-            console.error(new Error(e));
         }
     };
 }

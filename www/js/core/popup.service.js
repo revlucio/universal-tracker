@@ -1,13 +1,16 @@
 angular.module('tracker')
 	.factory('popupService', popupService);
 
-function popupService($ionicPopup) {
+function popupService($ionicPopup, $rootScope, activityService) {
 	return {
 		showAddActivityStep1: showAddActivityStep1,
 		showAddActivityStep2: showAddActivityStep2
 	};
 
-	function showAddActivityStep1($scope, then) {
+	function showAddActivityStep1(then) {
+		var $scope = $rootScope.$new();
+		$scope.vm = { activityTypes: activityService.getActivityTypes() };
+
 		var addPopupConfig = {
 			title: 'Add a new activity',
 			subTitle: 'What is the name of the activity?',
@@ -22,10 +25,10 @@ function popupService($ionicPopup) {
 				text: 'Next',
 				type: 'button-positive',
 				onTap: function(e) {
-					if (!$scope.vm.newActivity.name) {
+					if (!$scope.vm.newActivity) {
 						e.preventDefault();
 					} else {
-						return $scope.vm.newActivity.name;
+						return $scope.vm.newActivity;
 					}
 				}
 			}]
@@ -34,7 +37,10 @@ function popupService($ionicPopup) {
 		$ionicPopup.show(addPopupConfig).then(then);
 	}
 
-	function showAddActivityStep2($scope, then) {
+	function showAddActivityStep2(newActivity, then) {
+		var $scope = $rootScope.$new();
+		$scope.vm = { newActivity: newActivity };
+		
 		var addPopupConfig2 = {
 			title: 'Add a new activity',
 			subTitle: 'What is the type of the activity?',
@@ -48,6 +54,8 @@ function popupService($ionicPopup) {
 				onTap: function() {
 					if (!$scope.vm.newActivity.type) {
 						e.preventDefault();
+					} else {
+						return $scope.vm.newActivity;
 					}
 				}
 			}]
