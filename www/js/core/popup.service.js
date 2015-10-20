@@ -9,7 +9,15 @@ function popupService($ionicPopup, $rootScope, activityService) {
 
 	function showAddActivityStep1(then) {
 		var $scope = $rootScope.$new();
-		$scope.vm = { activityTypes: activityService.getActivityTypes() };
+		$scope.vm = { 
+			activityTypes: activityService.getActivityTypes(),
+			activityChosen: function() {
+				$scope.vm.newActivity.customName = '';
+			},
+			customNameEntered: function() {
+				$scope.vm.newActivity.name = '';
+			}
+		 };
 
 		var addPopupConfig = {
 			title: 'Add a new activity',
@@ -28,7 +36,9 @@ function popupService($ionicPopup, $rootScope, activityService) {
 					if (!$scope.vm.newActivity) {
 						e.preventDefault();
 					} else {
-						return $scope.vm.newActivity;
+						var activity = $scope.vm.newActivity;
+						if (activity.customName) activity.name = activity.customName
+						return activity;
 					}
 				}
 			}]
@@ -51,7 +61,7 @@ function popupService($ionicPopup, $rootScope, activityService) {
 			}, {
 				text: 'Add',
 				type: 'button-positive',
-				onTap: function() {
+				onTap: function(e) {
 					if (!$scope.vm.newActivity.type) {
 						e.preventDefault();
 					} else {

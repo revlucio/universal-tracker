@@ -19,27 +19,29 @@ function ActivityCtrl(
 
 	function addActivity() {
 		popupService.showAddActivityStep1(function(newActivity1) {
-			if (newActivity1) {
-				popupService.showAddActivityStep2(newActivity1, function(newActivity) {
-					if (newActivity.type === 'countdown') {
-						newActivity.duration = 0;
-						vm.data = getDurationSplit(newActivity);
+			if (!newActivity1) return;
+		
+			popupService.showAddActivityStep2(newActivity1, function(newActivity) {
+				vm.newActivity = {};
+				if (!newActivity) return;
 
-						$ionicPopup.show(logDurationConfig).then(function(res) {
-							if (res) {
-					            newActivity.duration = res;
-								newActivity.remaining = res;
-								activityService.add(newActivity);
-							}
-				        });	
-					} else if (newActivity.name && newActivity.type) {
-						newActivity.duration = 0;
-						newActivity.remaining = 0;
-				   		activityService.add(newActivity);
-				   	}
-					vm.newActivity = {};
-			   	});
-			}
+				if (newActivity.type === 'countdown') {
+					newActivity.duration = 0;
+					vm.data = getDurationSplit(newActivity);
+
+					$ionicPopup.show(logDurationConfig).then(function(res) {
+						if (res) {
+				            newActivity.duration = res;
+							newActivity.remaining = res;
+							activityService.add(newActivity);
+						}
+			        });	
+				} else if (newActivity.name && newActivity.type) {
+					newActivity.duration = 0;
+					newActivity.remaining = 0;
+			   		activityService.add(newActivity);
+			   	}
+		   	});
  		});
 	}
 
