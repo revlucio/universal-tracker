@@ -26,17 +26,19 @@ function oneSelfService(API) {
         if (event.amount) { 
             eventToLog.properties.quantity = event.amount;
         } else {
-            eventToLog.properties.duration = event.duration;
+            eventToLog.properties.duration = event.duration / 1000;
         }
 
         lib1self.sendEvent(eventToLog, stream);
 	}
 
-	function getChartUrl(actionTags) {
+	function getChartUrl(actionTag, type) {
+        var sum = (type === 'single' || type === 'multi') ? 'quantity' : 'duration';
+
 		var url = lib1self
             .objectTags(["self"])
-            .actionTags(actionTags)
-            .sum("quantity")
+            .actionTags([actionTag])
+            .sum(sum)
             .barChart()
             .backgroundColor("ddcc19")
             .url(stream);
