@@ -2,6 +2,9 @@ angular.module('tracker')
     .factory('AuthenticationService', AuthenticationService);
 
 function AuthenticationService($http, API, $ionicPopup, $cordovaToast, EventSendService) {
+    var auth_headers = {
+        'Authorization': API.appId + ":" + API.appSecret
+    };
     
     return {
         authenticate: showDisclaimer,
@@ -46,9 +49,7 @@ function AuthenticationService($http, API, $ionicPopup, $cordovaToast, EventSend
         }
     };
 
-    var auth_headers = {
-        'Authorization': API.appId + ":" + API.appSecret
-    };
+    
     function registerStream() {
         $http.post(API.endpoint + "/v1/streams", {}, {
             headers: auth_headers
