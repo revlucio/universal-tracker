@@ -87,10 +87,10 @@ function ActivityCtrl(
 	}
 
 	function logSingle(activity) {
-		$ionicPopup.alert({
-			title: 'You have logged a ' + activity.name,
-		}).then(function() {
-			historyService.add({event: activity.name, amount: 1});
+		$ionicPopup.confirm({
+			title: 'Do you want to log a ' + activity.name + '?',
+		}).then(function(response) {
+			if (response) historyService.add({event: activity.name, amount: 1});
 	 	});
 	}
 
