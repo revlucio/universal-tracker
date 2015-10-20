@@ -151,10 +151,23 @@ input[type="text"] {
 }
 
 .add-button {
-    font-size:34px; 
     z-index: 12 !important;
     position: absolute !important; 
     bottom: 10px !important;
     right: 10px !important;
     background-color: #00B8E7!important;
+}
+
+.settings-button {
+    color: white;
+    padding: 5px;
+}
+
+.plus-icon {
+    width: 36px;
+    height: 36px;
+}
+
+.radio-button {
+    padding-left: 5px;
 }

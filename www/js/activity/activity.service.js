@@ -33,7 +33,19 @@ function activityService() {
             "Excercising",
             "Meditating",
             "Meetings",
-            "Partying"
+            "Partying",
+            "Playing Instrument",
+            "Playing Games",
+            "Reading",
+            "Sitting",
+            "Sleeping",
+            "Standing",
+            "Studying",
+            "Tooth Brushing",
+            "Tooth Flossing",
+            "TV Watching ",
+            "Working",
+            "Writing"
         ];
     }
 

@@ -8,6 +8,7 @@ var filename = 'app.' + Date.now() + '.';
 var folder = 'www/dist';
 
 gulp.task('default', ['watch']);
+gulp.task('build', ['js', 'css', 'html']);
 
 gulp.task('js', function () {
   gulp.src(['www/js/app.js', 'www/js/**/*.js'])

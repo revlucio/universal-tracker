@@ -1,6 +1,8 @@
-<input type="text" ng-model="vm.newActivity.name"></input>
+<input type="text" ng-model="vm.newActivity.name" placeholder="Enter a custom name here"></input>
+
+<br />
 
 <ion-radio ng-repeat="activityType in vm.activityTypes" ng-model="vm.newActivity.name" 
 ng-value="activityType">
-	{{activityType}}
+	<div class="radio-button">{{activityType}}</div>
 </ion-radio>
