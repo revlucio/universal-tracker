@@ -1,6 +1,14 @@
 angular.module('tracker')
-    .service('AuthenticationService', function($http, API, $ionicPopup, $cordovaToast, EventSendService){
-    var showDisclaimer = function(force_show, callback) {
+    .factory('AuthenticationService', AuthenticationService);
+
+function AuthenticationService($http, API, $ionicPopup, $cordovaToast, EventSendService) {
+    
+    return {
+        authenticate: showDisclaimer,
+        authenticated: authenticated
+    };
+
+    function showDisclaimer(force_show, callback) {
         var onConfirm = function(res) {
             if (res) {
                 console.log("Authenticated, yay!");
@@ -36,40 +44,35 @@ angular.module('tracker')
                 }]
             });
         }
-    },
+    };
 
-    auth_headers = {
+    var auth_headers = {
         'Authorization': API.appId + ":" + API.appSecret
-    },
-    registerStream = function() {
+    };
+    function registerStream() {
         $http.post(API.endpoint + "/v1/streams", {}, {
             headers: auth_headers
         })
-            .success(function(data) {
-                window.localStorage.api_credentials = angular.toJson(data);
-                window.localStorage.last_event_sent_index = -1;
+        .success(function(data) {
+            window.localStorage.api_credentials = angular.toJson(data);
+            window.localStorage.last_event_sent_index = -1;
 
-                //a continuous service to send pending events
-                EventSendService.sendEvents();
+            //a continuous service to send pending events
+            EventSendService.sendEvents();
 
-        try {
-            $cordovaToast.show("Authenticated", 'long', 'bottom')
-        } catch (e) {
-            console.error(new Error(e));
-        }
-            })
-            .error(function(data, status, headers, config) {
-                //try again next time :(
-            });
-    },
+            try {
+                $cordovaToast.show("Authenticated", 'long', 'bottom')
+            } catch (e) {
+                console.error(new Error(e));
+            }
+        })
+        .error(function(data, status, headers, config) {
+            //try again next time :(
+        });
+    };
 
-    authenticated = function() {
+    function authenticated() {
         var api_credentials = window.localStorage.api_credentials;
         return (api_credentials !== "Not authenticated") && (typeof api_credentials !== 'undefined');
     };
-
-    return {
-        authenticate: showDisclaimer,
-        authenticated: authenticated
-    };
-});
+}
