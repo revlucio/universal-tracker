@@ -35,8 +35,7 @@ function historyService(preferenceService, oneSelfService) {
 	}
 
 	function add(event) {
-        oneSelfService.sendEventToApi(event);
-		event.when = new Date().toISOString();
+        event.when = new Date().toISOString();
         oneSelfService.sendEventToApi(event);
 		history.push(event);
 		save();

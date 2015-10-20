@@ -16,14 +16,18 @@ function oneSelfService(API) {
 
 	function sendEventToApi(event) {
 		var eventToLog = {
-            "source": API.appName,
-            "version": API.appVersion,
-            "objectTags": ["self"],
-            "actionTags": event.event,
-            "properties": {
-                "quantity": event.amount
-            }
+            source: API.appName,
+            version: API.appVersion,
+            objectTags: ["self"],
+            actionTags: event.event,
+            properties: { }
         };
+
+        if (event.amount) { 
+            eventToLog.properties.quantity = event.amount;
+        } else {
+            eventToLog.properties.duration = event.duration;
+        }
 
         lib1self.sendEvent(eventToLog, stream);
 	}
