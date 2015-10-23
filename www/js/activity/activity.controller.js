@@ -83,16 +83,34 @@ function ActivityCtrl(
 	                return vm.amount;
 	            }
 	        }]
-		}).then(function(res) {
-			if (res) historyService.add({event: activity.name, amount: res});
+		}).then(function(response) {
+			var event = {event: activity.name, amount: response, note: vm.note};
+			if (response) historyService.add(event);
+			vm.note = '';
 	 	});
 	}
 
 	function logSingle(activity) {
-		$ionicPopup.confirm({
+		$ionicPopup.show({
+        	templateUrl: 'templates/popup-logsingle.html',
 			title: 'Do you want to log a ' + activity.name + '?',
+        	scope: $scope,
+        	buttons: [{
+	            text: 'Cancel',
+	            onTap: function(e) {
+	            	return null;
+	            }
+	        }, {
+	            text: '<b>Log</b>',
+	            type: 'button-positive',
+	            onTap: function(e) {
+	                return 'something';
+	            }
+	        }]
 		}).then(function(response) {
-			if (response) historyService.add({event: activity.name, amount: 1});
+			var event = {event: activity.name, amount: 1, note: vm.note};
+			if (response) historyService.add(event);
+			vm.note = '';
 	 	});
 	}
 
@@ -102,9 +120,12 @@ function ActivityCtrl(
         if (!activity.interval) {
 			vm.data = getDurationSplit(activity);
 
-            $ionicPopup.show(logDurationConfig).then(function(res) {
-            	if (res) historyService.add({event:activity.name, duration:res});
+            $ionicPopup.show(logDurationConfig)
+            .then(function(response) {
+            	var event = {event: activity.name, duration: response, note: vm.note};
+				if (response) historyService.add(event);
 				activity.duration = 0;
+				vm.note = '';
             });
         }
     }
@@ -127,11 +148,17 @@ function ActivityCtrl(
 		if (!activity.interval) {
 			activityTimingService.toggleCountdownActivity(activity);
 		} else {
-			var duration = moment.duration(moment().diff(activity.startDate));
-			historyService.add({event:activity.name, duration:duration.asMilliseconds()});
-
-			activityTimingService.toggleCountdownActivity(activity);
-			activity.remaining = activity.duration;
+			$ionicPopup.show(logDurationConfig)
+            .then(function(response) {
+			var duration = moment.duration(moment().diff(activity.startDate)).asMilliseconds();
+            	var event = {event: activity.name, duration: duration, note: vm.note};
+				
+				if (response) historyService.add(event);
+				
+				activityTimingService.toggleCountdownActivity(activity);
+				activity.remaining = activity.duration;
+				vm.note = '';
+            });
 		}
 	}
 }

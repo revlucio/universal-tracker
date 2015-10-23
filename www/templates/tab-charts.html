@@ -1,13 +1,11 @@
 <ion-view title="Charts">
-  <ion-content overflow-scroll="true">
-    <div class="list">
-      <label class="item item-input item-select">
-        <div class="input-label">
-          Select Activity
-        </div>
-        <select ng-change="vm.showChart()" ng-options="activity.name as activity.name for activity in vm.activities" ng-model="vm.chart.type">
-        </select>
-      </label>
-    </div>
+  <ion-content class="padding custom-content">
+    <ion-list>
+      <ion-item ng-repeat="activity in vm.activities track by $index" 
+        type="item-text-wrap"
+        ng-click="vm.showChart(activity.name)">
+      {{activity.name}}
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

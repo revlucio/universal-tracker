@@ -23,6 +23,8 @@ function oneSelfService(API) {
             properties: { }
         };
 
+        if (event.note) eventToLog.note = event.note;
+
         if (event.amount) { 
             eventToLog.properties.quantity = event.amount;
         } else {

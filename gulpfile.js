@@ -13,7 +13,7 @@ gulp.task('js', function () {
   gulp.src(['www/js/app.js', 'www/js/**/*.js'])
       .pipe($.concat('app.min.js'))
       .pipe($.ngAnnotate())
-      .pipe($.uglify())
+      //.pipe($.uglify())
       .pipe($.iife())
       .pipe(gulp.dest(folder));
 });

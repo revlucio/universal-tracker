@@ -17,9 +17,9 @@ function ChartCtrl(oneSelfService, $location, activityService, AuthenticationSer
     };
     init();
 
-    function showChart() {
-    	var type = _.find(vm.activities, { 'name': vm.chart.type }).type;
-		var url = oneSelfService.getChartUrl(vm.chart.type, type)
+    function showChart(name) {
+    	var type = _.find(vm.activities, { 'name': name }).type;
+		var url = oneSelfService.getChartUrl(name, type)
         window.open(url, '_system', 'location=no');
     };
 }
