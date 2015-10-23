@@ -1,0 +1,11 @@
+<div class="item_description" ng-click="vm.logCountdown(activity)">
+  <div class="activity_title">{{activity.name}} </div>
+  <div class="activity_duration">
+    <div class="duration_time" ng-class="{'duration_time_selected': activity.interval != undefined}">
+      {{ activity.remaining | millisecondsToStringFilter | durationPartFilter}}
+    </div>
+    <div class="circle icon" ng-class="{'duration_seconds_selected': activity.interval != undefined}">
+      <i class="ion-ios-timer-outline"></i>
+    </div>
+  </div>
+</div>
