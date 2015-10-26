@@ -1,7 +1,7 @@
 angular.module('tracker')
 	.factory('activityService', activityService);
 
-function activityService() {
+function activityService($filter) {
     var activities = loadActivities();
 
 	return {
@@ -10,7 +10,8 @@ function activityService() {
 		add: add,
 		remove: remove,
         getActivityTypes: getActivityTypes,
-        getActionTags: getActionTags
+        getActionTags: getActionTags,
+        getDurationSplit: getDurationSplit
 	};
 
     function loadActivities() {
@@ -75,5 +76,19 @@ function activityService() {
 
     function save() {
    		window.localStorage.activities = JSON.stringify(activities);
+    }
+
+    function getDurationSplit(activity) {
+        var durationString = $filter('millisecondsToStringFilter')(activity.duration);
+        var durationParts = durationString.split(':');
+
+        return {
+            duration: {
+                hours: parseInt(durationParts[0], 10),
+                minutes: parseInt(durationParts[1], 10),
+                seconds: parseInt(durationParts[2], 10),
+                milliseconds: parseInt(durationParts[3], 10)
+            }
+        };
     }
 }

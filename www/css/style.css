@@ -171,3 +171,11 @@ input[type="text"] {
 .radio-button {
     padding-left: 5px;
 }
+
+.tab-item .icon {
+    height: 34px;
+}
+
+.bar-footer {
+    height: 64px;
+}

@@ -1,0 +1,33 @@
+<ion-view title="Add Activity">
+	<ion-nav-button side="left">
+	<ion-nav-back-button class="ion-ios-arrow-back" style="">
+	      </ion-nav-back-button>
+	</ion-nav-button>
+
+	<ion-content class="padding custom-content">
+		<div class="list">
+		  <label class="item item-input">
+		    <span class="input-label">Name</span>
+		    <input 
+		    	type="text" 
+		    	ng-model="vm.newActivity.name" 
+		    	placeholder="Enter a custom name here"
+	    	>
+		  </label>
+		  <div class="item">
+			  or: 
+			  <a class="button button-positive" ui-sref="add-activity.select-name">Choose from our suggestions</a>
+		  </div>
+		</div>
+	</ion-content>	
+
+	<div class="bar bar-footer">
+	  <button class="button col" ui-sref="tab.dash">
+	      Cancel
+	    </button>
+		<span class="col"></span>
+	    <button ng-disabled="!vm.newActivity.name" class="button button-positive col" ui-sref="add-activity.type">
+	      Next
+	    </button>
+	</div>
+</ion-view>

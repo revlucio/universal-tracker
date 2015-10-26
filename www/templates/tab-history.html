@@ -5,7 +5,9 @@
         <div class="item item-divider item-center">
           {{ date|humanize }}
         </div>
-        <a class="item" ng-repeat="item in vm.events[date] track by $index">
+        <a class="item" 
+          ng-repeat="item in vm.events[date] track by $index"
+          ng-click="vm.showChart(item.event, item.type)">
           <div class="item_description" style="width: 90%">
             <span class="activity_title">{{ item.event }}</span> 
           </div>

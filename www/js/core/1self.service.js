@@ -42,7 +42,7 @@ function oneSelfService(API) {
             .actionTags([actionTag])
             .sum(sum)
             .barChart()
-            .backgroundColor("ddcc19")
+            .backgroundColor("00B8E7")
             .url(stream);
 
         return url;

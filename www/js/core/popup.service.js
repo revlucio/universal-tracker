@@ -52,7 +52,7 @@ function popupService($ionicPopup, $rootScope, activityService) {
 		$scope.vm = { newActivity: newActivity };
 		
 		var addPopupConfig2 = {
-			title: 'Add a new activity',
+			title: 'New activity: ' + newActivity.name,
 			subTitle: 'What is the type of the activity?',
 			templateUrl: 'templates/popup-add.html',
 			scope: $scope,

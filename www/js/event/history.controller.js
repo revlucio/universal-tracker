@@ -1,13 +1,19 @@
 angular.module('tracker')
 	.controller('HistoryCtrl', HistoryCtrl);
 
-function HistoryCtrl(historyService, $filter) {
+function HistoryCtrl(historyService, $filter, oneSelfService) {
 	var vm = this;
 
     vm.events = getEvents();
     vm.dates = Object.keys(getEvents()).sort().reverse();
     vm.humanizeTime = humanizeTime;
     vm.clearHistory = clearHistory;
+    vm.showChart = showChart;
+
+    function showChart(name, type) {
+        var url = oneSelfService.getChartUrl(name, type)
+        window.open(url, '_system', 'location=no');
+    };
 
     function humanizeTime(duration) {
         var tstring = $filter('millisecondsToStringFilter')(duration).split(':');
@@ -34,7 +40,11 @@ function HistoryCtrl(historyService, $filter) {
                 if (sum) {
                     sum.amount += event.amount;
                 } else {                    
-                    groups[date].unshift({event: event.event, amount:event.amount});
+                    groups[date].unshift({
+                        event: event.event, 
+                        amount: event.amount,
+                        type: event.type
+                    });
                 }
             } else {
                 groups[date].unshift(event);

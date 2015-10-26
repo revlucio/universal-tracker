@@ -9,41 +9,10 @@ function ActivityCtrl(
 
 	vm.activities = activityService.getActivities();
 
-	vm.addActivity = addActivity;
-	vm.newActivity = {};
-	
 	vm.logSingle = logSingle;
 	vm.logMulti = logMulti;
 	vm.logDuration = logDuration;
 	vm.logCountdown = logCountdown;
-
-	function addActivity() {
-		popupService.showAddActivityStep1(function(newActivity1) {
-			if (!newActivity1) return;
-		
-			popupService.showAddActivityStep2(newActivity1, function(newActivity) {
-				vm.newActivity = {};
-				if (!newActivity) return;
-
-				if (newActivity.type === 'countdown') {
-					newActivity.duration = 0;
-					vm.data = getDurationSplit(newActivity);
-
-					$ionicPopup.show(logDurationConfig).then(function(res) {
-						if (res) {
-				            newActivity.duration = res;
-							newActivity.remaining = res;
-							activityService.add(newActivity);
-						}
-			        });	
-				} else if (newActivity.name && newActivity.type) {
-					newActivity.duration = 0;
-					newActivity.remaining = 0;
-			   		activityService.add(newActivity);
-			   	}
-		   	});
- 		});
-	}
 
 	var logDurationConfig = {
         templateUrl: 'templates/popup-log-duration.html',
@@ -84,7 +53,12 @@ function ActivityCtrl(
 	            }
 	        }]
 		}).then(function(response) {
-			var event = {event: activity.name, amount: response, note: vm.note};
+			var event = {
+				event: activity.name, 
+				amount: response, 
+				note: vm.note,
+				type: activity.type
+			};
 			if (response) historyService.add(event);
 			vm.note = '';
 	 	});
@@ -108,7 +82,12 @@ function ActivityCtrl(
 	            }
 	        }]
 		}).then(function(response) {
-			var event = {event: activity.name, amount: 1, note: vm.note};
+			var event = {
+				event: activity.name, 
+				amount: 1, 
+				note: vm.note,
+				type: activity.type
+			};
 			if (response) historyService.add(event);
 			vm.note = '';
 	 	});
@@ -122,7 +101,12 @@ function ActivityCtrl(
 
             $ionicPopup.show(logDurationConfig)
             .then(function(response) {
-            	var event = {event: activity.name, duration: response, note: vm.note};
+            	var event = {
+            		event: activity.name, 
+            		duration: response, 
+            		note: vm.note,
+            		type: activity.type
+            	};
 				if (response) historyService.add(event);
 				activity.duration = 0;
 				vm.note = '';
@@ -151,7 +135,12 @@ function ActivityCtrl(
 			$ionicPopup.show(logDurationConfig)
             .then(function(response) {
 			var duration = moment.duration(moment().diff(activity.startDate)).asMilliseconds();
-            	var event = {event: activity.name, duration: duration, note: vm.note};
+            	var event = {
+            		event: activity.name, 
+            		duration: duration, 
+            		note: vm.note,
+            		type: activity.type
+            	};
 				
 				if (response) historyService.add(event);
 				

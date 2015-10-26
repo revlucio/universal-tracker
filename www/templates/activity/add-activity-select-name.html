@@ -1,0 +1,26 @@
+<ion-view title="Add Activity">
+	<ion-nav-button side="left">
+	<ion-nav-back-button class="ion-ios-arrow-back" style="">
+	      </ion-nav-back-button>
+	</ion-nav-button>
+
+	<ion-content class="padding custom-content">
+	<div class="list">
+		  		<ion-radio class="item" ng-repeat="activityType in vm.activityTypes"
+		  			ng-model="vm.newActivity.name" 
+					ng-value="activityType" ng-change="vm.activityChosen()">
+					<div class="radio-button">{{activityType}}</div>
+				</ion-radio>
+</div>
+	</ion-content>	
+
+	<div class="bar bar-footer">
+		<button class="button col" ui-sref="tab.dash">
+	      Cancel
+	    </button>
+		<span class="col"></span>
+	    <button class="button button-positive col" ui-sref="add-activity.type">
+	      Next
+	    </button>
+	</div>
+</ion-view>
