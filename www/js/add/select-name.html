@@ -4,14 +4,14 @@
 	      </ion-nav-back-button>
 	</ion-nav-button>
 
-	<ion-content class="padding custom-content">
-	<div class="list">
+	<ion-content class="padding custom-content has-footer">
+		<div class="list">
 		  		<ion-radio class="item" ng-repeat="activityType in vm.activityTypes"
 		  			ng-model="vm.newActivity.name" 
 					ng-value="activityType">
 					<div class="radio-button">{{activityType}}</div>
 				</ion-radio>
-</div>
+		</div>
 	</ion-content>	
 
 	<div class="bar bar-footer">
