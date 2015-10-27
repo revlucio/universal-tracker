@@ -68,6 +68,7 @@ function activityTimingService(moment, $interval, NotificationService, historySe
                 historyService.add({event:activity.name, duration:duration.asMilliseconds()});
 
                 $interval.cancel(activity.interval);
+                activity.remaining = activity.duration;
                 delete activity.interval;
                 removeActiveActivity(activity);
             }

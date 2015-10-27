@@ -49,8 +49,13 @@ function DashCtrl(
 	        }, {
 	            text: '<b>Log</b>',
 	            type: 'button-positive',
+	            disabled: true,
 	            onTap: function(e) {
-	                return vm.amount;
+	            	if (vm.amount <= 0) {
+	            		e.preventDefault();
+	            	} else {
+		                return vm.amount;
+		            }
 	            }
 	        }]
 		}).then(function(response) {
@@ -135,7 +140,7 @@ function DashCtrl(
 		} else {
 			$ionicPopup.show(logDurationConfig)
             .then(function(response) {
-			var duration = moment.duration(moment().diff(activity.startDate)).asMilliseconds();
+				var duration = moment.duration(moment().diff(activity.startDate)).asMilliseconds();
             	var event = {
             		event: activity.name, 
             		duration: duration, 
