@@ -78,13 +78,13 @@ function DashCtrl(
         	buttons: [{
 	            text: 'Cancel',
 	            onTap: function(e) {
-	            	return null;
+	            	return false;
 	            }
 	        }, {
 	            text: '<b>Log</b>',
 	            type: 'button-positive',
 	            onTap: function(e) {
-	                return 'something';
+	                return true;
 	            }
 	        }]
 		}).then(function(response) {
@@ -103,7 +103,7 @@ function DashCtrl(
         var activity = activityTimingService.toggleActivity(activity);
 
         if (!activity.interval) {
-			vm.data = getDurationSplit(activity);
+			vm.data = getDurationSplit(activity.duration);
 
             $ionicPopup.show(logDurationConfig)
             .then(function(response) {
@@ -120,8 +120,8 @@ function DashCtrl(
         }
     }
 
-    function getDurationSplit(activity) {
-    	var durationString = $filter('millisecondsToStringFilter')(activity.duration);
+    function getDurationSplit(duration) {
+    	var durationString = $filter('millisecondsToStringFilter')(duration);
         var durationParts = durationString.split(':');
 
 		return {
@@ -138,19 +138,20 @@ function DashCtrl(
 		if (!activity.interval) {
 			activityTimingService.toggleCountdownActivity(activity);
 		} else {
+			activityTimingService.toggleCountdownActivity(activity);
+
+			vm.data = getDurationSplit(activity.duration-activity.remaining+1000);
+
 			$ionicPopup.show(logDurationConfig)
             .then(function(response) {
-				var duration = moment.duration(moment().diff(activity.startDate)).asMilliseconds();
             	var event = {
             		event: activity.name, 
-            		duration: duration, 
+            		duration: response, 
             		note: vm.note,
             		type: activity.type
             	};
 				
 				if (response) historyService.add(event);
-				
-				activityTimingService.toggleCountdownActivity(activity);
 				activity.remaining = activity.duration;
 				vm.note = '';
             });

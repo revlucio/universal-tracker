@@ -11,9 +11,11 @@
 		    <input 
 		    	type="text" 
 		    	ng-model="vm.newActivity.name" 
-		    	placeholder="Enter a custom name here"
-	    	>
-		  </label>
+		    	placeholder="Enter a custom name here">
+	  		</label>
+		  	<div class="centered assertive" ng-if="vm.nameAlreadyExists()">
+				<strong>That activity already exists</strong>
+			</div>
 		</div>
 
 		<div class="centered">
@@ -32,7 +34,7 @@
 	      Cancel
 	    </button>
 		<span class="col"></span>
-	    <button ng-disabled="!vm.newActivity.name" class="button button-positive col" ui-sref="add-activity.type">
+	    <button ng-disabled="vm.activityInvalid()" class="button button-positive col" ui-sref="add-activity.type">
 	      Next
 	    </button>
 	</div>

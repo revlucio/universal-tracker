@@ -8,6 +8,8 @@ function AddCtrl(activityService, $state, newActivityService) {
 	vm.addActivity = addActivity;
 	vm.newActivity = newActivityService.activity;
 	vm.getDuration = getDuration;
+	vm.activityInvalid = activityInvalid;
+	vm.nameAlreadyExists = nameAlreadyExists;
 
 	function getDuration() {
 		return vm.newActivity.duration.hours * 3600000 
@@ -27,5 +29,16 @@ function AddCtrl(activityService, $state, newActivityService) {
 
 		newActivityService.activity = { duration: { hours: 0, minutes: 0, seconds: 0 }};
 		$state.go('tab.dash');
+	}
+
+	function activityInvalid() {
+		return !vm.newActivity.name || nameAlreadyExists();
+	}
+
+	function nameAlreadyExists() {
+		if (!vm.newActivity.name) return false;
+
+		var activities = activityService.getActivities();
+		return _.find(activities, 'name', vm.newActivity.name);
 	}
 }
