@@ -1,4 +1,4 @@
-<ion-view title="Add Activity">
+<ion-view title="Add Activity" ng-init="vm.reset()">
 	<ion-nav-button side="left">
 	<ion-nav-back-button class="ion-ios-arrow-back" style="">
 	      </ion-nav-back-button>
@@ -14,10 +14,16 @@
 		    	placeholder="Enter a custom name here"
 	    	>
 		  </label>
-		  <div class="item">
-			  or: 
-			  <a class="button button-positive" ui-sref="add-activity.select-name">Choose from our suggestions</a>
-		  </div>
+		</div>
+
+		<div class="centered">
+			or:
+		</div>
+		<br/>
+		<div class="centered">
+			<a class="button button-positive" ui-sref="add-activity.select-name">
+				Choose from our suggestions
+			</a>
 		</div>
 	</ion-content>	
 

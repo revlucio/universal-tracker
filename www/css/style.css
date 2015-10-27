@@ -179,3 +179,7 @@ input[type="text"] {
 .bar-footer {
     height: 64px;
 }
+
+.centered {
+    text-align: center;
+}

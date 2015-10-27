@@ -5,7 +5,6 @@
 	</ion-nav-button>
 
 	<ion-content class="padding custom-content">
-
 		<div>Hours : Minutes : Seconds</div>
 		<div>
 			<input type="number" size="2" min="0" ng-model="vm.newActivity.duration.hours"/>
@@ -20,7 +19,7 @@
 	      Cancel
 	    </button>
 		<span class="col"></span>
-	    <button class="button button-positive col" ng-click="vm.addActivity()">
+	    <button class="button button-positive col" ng-disabled="vm.getDuration() <= 0" ng-click="vm.addActivity()">
 	      Add
 	    </button>
 	</div>

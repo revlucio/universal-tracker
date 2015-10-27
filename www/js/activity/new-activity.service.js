@@ -2,18 +2,9 @@ angular.module('tracker')
 	.factory('newActivityService', newActivityService);
 
 function newActivityService() {
-	var activity = {};
+	var activity = { duration: { hours: 0, minutes: 0, seconds: 0 }};
 
 	return {
-		get: get,
-		reset: reset
-	}
-
-	function get() {
-		return activity;	
-	}
-
-	function reset() {
-		activity = {};
+		activity: activity
 	}
 }

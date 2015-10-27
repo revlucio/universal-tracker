@@ -8,7 +8,7 @@
 	<div class="list">
 		  		<ion-radio class="item" ng-repeat="activityType in vm.activityTypes"
 		  			ng-model="vm.newActivity.name" 
-					ng-value="activityType" ng-change="vm.activityChosen()">
+					ng-value="activityType">
 					<div class="radio-button">{{activityType}}</div>
 				</ion-radio>
 </div>
@@ -19,7 +19,7 @@
 	      Cancel
 	    </button>
 		<span class="col"></span>
-	    <button class="button button-positive col" ui-sref="add-activity.type">
+	    <button class="button button-positive col" ng-disabled="!vm.newActivity.name" ui-sref="add-activity.type">
 	      Next
 	    </button>
 	</div>
