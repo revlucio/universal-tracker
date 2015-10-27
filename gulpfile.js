@@ -10,7 +10,7 @@ gulp.task('default', ['watch']);
 gulp.task('build', ['js', 'css', 'html']);
 
 gulp.task('js', function () {
-  gulp.src(['www/js/app.js', 'www/js/**/*.js'])
+  gulp.src(['www/js/app.module.js', 'www/js/**/*.js'])
       .pipe($.concat('app.min.js'))
       .pipe($.ngAnnotate())
       //.pipe($.uglify())
@@ -26,7 +26,7 @@ gulp.task('css', function() {
 });
 
 gulp.task('html', function() {
-  gulp.src('www/templates/**/*.html')
+  gulp.src('www/**/*.html')
     .pipe($.angularTemplatecache("templates.js", {module: "tracker", root: "templates/"}))
     .pipe(gulp.dest(folder));
 });

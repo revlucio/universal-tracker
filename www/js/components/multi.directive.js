@@ -3,6 +3,6 @@ angular.module('tracker')
 
 function multiActivity() {
 	return {
-		templateUrl: 'templates/activity/multi-activity.directive.html'
+		templateUrl: 'js/components/multi.directive.html'
 	};
 }

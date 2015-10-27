@@ -3,6 +3,6 @@ angular.module('tracker')
 
 function durationActivity() {
 	return {
-		templateUrl: 'templates/activity/duration-activity.directive.html'
+		templateUrl: 'js/components/duration.directive.html'
 	};
 }

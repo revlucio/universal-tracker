@@ -3,6 +3,6 @@ angular.module('tracker')
 
 function singleActivity() {
 	return {
-		templateUrl: 'templates/activity/single-activity.directive.html'
+		templateUrl: 'js/components/single.directive.html'
 	};
 }

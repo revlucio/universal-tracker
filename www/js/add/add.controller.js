@@ -1,7 +1,7 @@
 angular.module('tracker')
-	.controller('AddActivityCtrl', AddActivityCtrl);
+	.controller('AddCtrl', AddCtrl);
 
-function AddActivityCtrl(activityService, $state, newActivityService) {
+function AddCtrl(activityService, $state, newActivityService) {
 	var vm = this;
 
 	vm.activityTypes = activityService.getActivityTypes();

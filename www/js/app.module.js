@@ -9,15 +9,6 @@ angular.module('tracker')
       appId: "app-id-556d18e5ed9e4e67343332987f73a360",
       appSecret: "app-secret-0f5d09051e0bda5869e1a866bb4bc62afe30ae70fc8be92313a6e25ecc7d07db"
   })
-
-  
-  .config(function($ionicConfigProvider, $mdGestureProvider) {
-    $ionicConfigProvider.navBar.alignTitle('center');
-    $ionicConfigProvider.tabs.position('top');
-    $ionicConfigProvider.backButton.text('back');
-    $mdGestureProvider.skipClickHijack();
-    $ionicConfigProvider.views.maxCache(0);
-  })
   .run(function($ionicPlatform, AuthenticationService, EventSendService) {
       $ionicPlatform.ready(function() {
         if (window.plugin && window.plugin.notification) {

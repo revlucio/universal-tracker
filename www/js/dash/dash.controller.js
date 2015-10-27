@@ -1,7 +1,7 @@
 angular.module('tracker')
-	.controller('ActivityCtrl', ActivityCtrl);
+	.controller('DashCtrl', DashCtrl);
 
-function ActivityCtrl(
+function DashCtrl(
 	$ionicPopup, $scope, activityService, historyService, activityTimingService, 
 	$filter, preferenceService, newActivityService) {
 	

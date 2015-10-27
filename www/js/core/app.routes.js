@@ -12,8 +12,8 @@ function routesConfig($stateProvider, $urlRouterProvider) {
             url: '/dash',
             views: {
                 'tab-dash': {
-                    templateUrl: 'templates/tab-dash.html',
-                    controller: 'ActivityCtrl as vm'
+                    templateUrl: 'js/dash/dash.html',
+                    controller: 'DashCtrl as vm'
                 }
             }
         })
@@ -21,8 +21,8 @@ function routesConfig($stateProvider, $urlRouterProvider) {
             url: '/dash/edit',
             views: {
                 'tab-dash': {
-                    templateUrl: 'templates/tab-dash-edit.html',
-                    controller: 'DashboardEditCtrl as vm'
+                    templateUrl: 'js/dash/dash-edit.html',
+                    controller: 'DashEditCtrl as vm'
                 }
             }
         })
@@ -30,7 +30,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
             url: '/history',
             views: {
                 'tab-history': {
-                    templateUrl: 'templates/tab-history.html',
+                    templateUrl: 'js/history/history.html',
                     controller: 'HistoryCtrl as vm'
                 }
             }
@@ -39,7 +39,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
             url: '/charts',
             views: {
                 'tab-charts': {
-                    templateUrl: 'templates/tab-charts.html',
+                    templateUrl: 'js/charts/charts.html',
                     controller: 'ChartCtrl as vm'
                 }
             }
@@ -47,27 +47,27 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       .state('add-activity', {
         url: '/add',
         abstract: true,
-        templateUrl: 'templates/activity/add-activity.html'
+        templateUrl: 'js/add/add.html'
       })
         .state('add-activity.name', {
           url: '/name',
-          templateUrl: 'templates/activity/add-activity-name.html',
-          controller: 'AddActivityCtrl as vm'
+          templateUrl: 'js/add/name.html',
+          controller: 'AddCtrl as vm'
         })
         .state('add-activity.select-name', {
           url: '/select-name',
-          templateUrl: 'templates/activity/add-activity-select-name.html',
-          controller: 'AddActivityCtrl as vm'
+          templateUrl: 'js/add/select-name.html',
+          controller: 'AddCtrl as vm'
         })
         .state('add-activity.type', {
           url: '/type',
-          templateUrl: 'templates/activity/add-activity-type.html',
-          controller: 'AddActivityCtrl as vm'
+          templateUrl: 'js/add/type.html',
+          controller: 'AddCtrl as vm'
         })
         .state('add-activity.duration', {
           url: '/duration',
-          templateUrl: 'templates/activity/add-activity-duration.html',
-          controller: 'AddActivityCtrl as vm'
+          templateUrl: 'js/add/duration.html',
+          controller: 'AddCtrl as vm'
         })
       ;
 

@@ -1,7 +1,7 @@
 angular.module('tracker')
-	.controller('DashboardEditCtrl', DashboardEditCtrl);
+	.controller('DashEditCtrl', DashEditCtrl);
 
-function DashboardEditCtrl(activityService) {
+function DashEditCtrl(activityService) {
 	var vm = this;
 
 	vm.activities = activityService.getActivities();
