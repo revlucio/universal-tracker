@@ -27,7 +27,6 @@ function routesConfig($stateProvider, $urlRouterProvider) {
             }
         })
         .state('tab.history', {
-            cache: false,
             url: '/history',
             views: {
                 'tab-history': {
@@ -37,7 +36,6 @@ function routesConfig($stateProvider, $urlRouterProvider) {
             }
         })
         .state('tab.charts', {
-            cache: false,
             url: '/charts',
             views: {
                 'tab-charts': {
@@ -47,31 +45,26 @@ function routesConfig($stateProvider, $urlRouterProvider) {
             }
         })
       .state('add-activity', {
-        cache: false,
         url: '/add',
         abstract: true,
         templateUrl: 'templates/activity/add-activity.html'
       })
         .state('add-activity.name', {
-          cache: false,
           url: '/name',
           templateUrl: 'templates/activity/add-activity-name.html',
           controller: 'AddActivityCtrl as vm'
         })
         .state('add-activity.select-name', {
-          cache: false,
           url: '/select-name',
           templateUrl: 'templates/activity/add-activity-select-name.html',
           controller: 'AddActivityCtrl as vm'
         })
         .state('add-activity.type', {
-          cache: false,
           url: '/type',
           templateUrl: 'templates/activity/add-activity-type.html',
           controller: 'AddActivityCtrl as vm'
         })
         .state('add-activity.duration', {
-          cache: false,
           url: '/duration',
           templateUrl: 'templates/activity/add-activity-duration.html',
           controller: 'AddActivityCtrl as vm'

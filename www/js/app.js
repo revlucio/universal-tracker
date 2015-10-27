@@ -14,7 +14,9 @@ angular.module('tracker')
   .config(function($ionicConfigProvider, $mdGestureProvider) {
     $ionicConfigProvider.navBar.alignTitle('center');
     $ionicConfigProvider.tabs.position('top');
+    $ionicConfigProvider.backButton.text('back');
     $mdGestureProvider.skipClickHijack();
+    $ionicConfigProvider.views.maxCache(0);
   })
   .run(function($ionicPlatform, AuthenticationService, EventSendService) {
       $ionicPlatform.ready(function() {
