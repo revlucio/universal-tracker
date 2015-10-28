@@ -116,9 +116,6 @@
 }
 
 input[type="number"] {
-   float: left;
-   margin: 2px;
-   width: 31%;
    padding: 5px;
 }
 

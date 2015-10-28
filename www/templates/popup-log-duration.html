@@ -1,7 +1,22 @@
-<div>Hours : Minutes : Seconds</div>
-<div>
-	<input type="number" size="2" min="0" ng-model="vm.data.duration.hours"/>
-	<input type="number" size="2" min="0" max="60" ng-model="vm.data.duration.minutes"/>
-	<input type="number" size="2" min="0" max="60" ng-model="vm.data.duration.seconds"/>
+<div class="row">
+	<div class="col">Hours:</div>
+	<div class="col">Minutes:</div>
+	<div class="col">Seconds:</div>
 </div>
-<input type="text" ng-model="vm.note" placeholder="Optional: add a note"></input>
+<div class="row">
+	<div class="col">
+		<input type="number" size="2" min="0" ng-model="vm.data.duration.hours"/>
+	</div>
+	<div class="col">
+		<input type="number" size="2" min="0" max="60" ng-model="vm.data.duration.minutes"/>
+	</div>
+	<div class="col">
+		<input type="number" size="2" min="0" max="60" ng-model="vm.data.duration.seconds"/>
+	</div>
+</div>
+<div class="row">
+	<div class="col">
+		<input type="text" ng-model="vm.note" placeholder="Optional: add a note"></input>
+	</div>
+</div>
+

@@ -3,6 +3,26 @@ angular.module('tracker')
 
 function activityService($filter) {
     var activities = loadActivities();
+    var activityTypes = [
+        "Coding",
+        "Commuting",
+        "Excercising",
+        "Meditating",
+        "Meetings",
+        "Partying",
+        "Playing Instrument",
+        "Playing Games",
+        "Reading",
+        "Sitting",
+        "Sleeping",
+        "Standing",
+        "Studying",
+        "Tooth Brushing",
+        "Tooth Flossing",
+        "TV Watching ",
+        "Working",
+        "Writing"
+    ];
 
 	return {
 		moveItem: moveItem,
@@ -28,26 +48,11 @@ function activityService($filter) {
     }
 
     function getActivityTypes() {
-        return [
-            "Coding",
-            "Commuting",
-            "Excercising",
-            "Meditating",
-            "Meetings",
-            "Partying",
-            "Playing Instrument",
-            "Playing Games",
-            "Reading",
-            "Sitting",
-            "Sleeping",
-            "Standing",
-            "Studying",
-            "Tooth Brushing",
-            "Tooth Flossing",
-            "TV Watching ",
-            "Working",
-            "Writing"
-        ];
+        var currentActivityNames = _.map(getActivities(), 'name');
+        var filtered = _.filter(activityTypes, function(type) {
+            return !_.includes(currentActivityNames, type);
+        });
+        return filtered;
     }
 
     function getActionTags() {
