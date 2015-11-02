@@ -3,7 +3,7 @@ angular.module('tracker')
 
 function DashCtrl(
 	$ionicPopup, $scope, activityService, historyService, activityTimingService, 
-	$filter, preferenceService, newActivityService) {
+	$filter, preferenceService, newActivityService, toastService) {
 	
 	var vm = this;
 
@@ -96,6 +96,7 @@ function DashCtrl(
 			};
 			if (response) historyService.add(event);
 			vm.note = '';
+			toastService.show('you logged something!', 'short', 'center');
 	 	});
 	}
 

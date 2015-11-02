@@ -1,7 +1,7 @@
 angular.module('tracker')
     .factory('AuthenticationService', AuthenticationService);
 
-function AuthenticationService($http, API, $ionicPopup, $cordovaToast, EventSendService) {
+function AuthenticationService($http, API, $ionicPopup, toastService, EventSendService) {
     var auth_headers = {
         'Authorization': API.appId + ":" + API.appSecret
     };
@@ -16,11 +16,7 @@ function AuthenticationService($http, API, $ionicPopup, $cordovaToast, EventSend
             if (res) {
                 console.log("Authenticated, yay!");
                 registerStream();
-                try {
-                    $cordovaToast.show("Authenticating...", 'long', 'bottom');
-                } catch (e) {
-                    console.error(new Error(e));
-                }
+                toastService.show("Authenticating...", 'long', 'bottom'); 
             } else {
                 window.localStorage.api_credentials = 'Not authenticated';
                 console.log('Not authenticated :(');
@@ -61,11 +57,7 @@ function AuthenticationService($http, API, $ionicPopup, $cordovaToast, EventSend
             //a continuous service to send pending events
             EventSendService.sendEvents();
 
-            try {
-                $cordovaToast.show("Authenticated", 'long', 'bottom')
-            } catch (e) {
-                console.error(new Error(e));
-            }
+            toastService.show("Authenticated", 'long', 'bottom');
         })
         .error(function(data, status, headers, config) {
             //try again next time :(

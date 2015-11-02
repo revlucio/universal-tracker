@@ -42,7 +42,7 @@ function activityService($filter) {
                 { name: 'Push ups', type: 'multi' },
                 { name: 'Drank a coffee', type: 'single' },
                 { name: 'Commuting', type: 'duration', duration: 0 },
-                { name: 'Meditating', type: 'countdown', duration: 0, remaining: 600000 }
+                { name: 'Meditating', type: 'countdown', duration: 600000, remaining: 600000 }
             ];
         }
     }

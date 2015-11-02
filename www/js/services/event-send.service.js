@@ -69,7 +69,7 @@ function EventSendService($http, $timeout, API, $filter) {
             events = getUnsentEvents();
 
             if (0 !== events.length) {
-                for (i = 0; i < events.length; i++) {
+                for (var i = 0; i < events.length; i++) {
                     api_events.push(buildAPIEvent(events[i]));
                 }
                 
