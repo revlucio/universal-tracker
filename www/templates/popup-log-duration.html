@@ -5,13 +5,19 @@
 </div>
 <div class="row">
 	<div class="col">
-		<input type="number" size="2" min="0" ng-model="vm.data.duration.hours"/>
+		<input type="tel" size="2" min="0" 
+			pattern="[0-9]*"
+			ng-model="vm.data.duration.hours"/>
 	</div>
 	<div class="col">
-		<input type="number" size="2" min="0" max="60" ng-model="vm.data.duration.minutes"/>
+		<input type="tel" size="2" min="0" max="60" 
+			pattern="[0-9]*"
+			ng-model="vm.data.duration.minutes"/>
 	</div>
 	<div class="col">
-		<input type="number" size="2" min="0" max="60" ng-model="vm.data.duration.seconds"/>
+		<input type="tel" size="2" min="0" max="60" 
+			pattern="[0-9]*"
+			ng-model="vm.data.duration.seconds"/>
 	</div>
 </div>
 <div class="row">
