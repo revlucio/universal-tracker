@@ -67,6 +67,7 @@ function DashCtrl(
 			};
 			if (response) historyService.add(event);
 			vm.note = '';
+			toastService.show(activity.name + ' logged', 'short', 'center');
 	 	});
 	}
 
@@ -96,7 +97,7 @@ function DashCtrl(
 			};
 			if (response) historyService.add(event);
 			vm.note = '';
-			toastService.show('you logged something!', 'short', 'center');
+			toastService.show(activity.name + ' logged', 'short', 'center');
 	 	});
 	}
 
@@ -117,6 +118,7 @@ function DashCtrl(
 				if (response) historyService.add(event);
 				activity.duration = 0;
 				vm.note = '';
+				toastService.show(activity.name + ' logged', 'short', 'center');
             });
         }
     }
@@ -155,6 +157,7 @@ function DashCtrl(
 				if (response) historyService.add(event);
 				activity.remaining = activity.duration;
 				vm.note = '';
+				toastService.show(activity.name + ' logged', 'short', 'center');
             });
 		}
 	}
