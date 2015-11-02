@@ -5,13 +5,22 @@
 	</ion-nav-button>
 
 	<ion-content class="padding custom-content">
-		<div>Hours : Minutes : Seconds</div>
-		<div>
-			<input type="number" size="2" min="0" ng-model="vm.newActivity.duration.hours"/>
-			<input type="number" size="2" min="0" max="60" ng-model="vm.newActivity.duration.minutes"/>
-			<input type="number" size="2" min="0" max="60" ng-model="vm.newActivity.duration.seconds"/>
+		<div class="row">
+			<div class="col">Hours:</div>
+			<div class="col">Minutes:</div>
+			<div class="col">Seconds:</div>
 		</div>
-		
+		<div class="row">
+			<div class="col">
+				<input type="number" size="2" min="0" max="24" ng-model="vm.newActivity.duration.hours"/>
+			</div>
+			<div class="col">
+				<input type="number" size="2" min="0" max="60" ng-model="vm.newActivity.duration.minutes"/>
+			</div>
+			<div class="col">
+				<input type="number" size="2" min="0" max="60" ng-model="vm.newActivity.duration.seconds"/>
+			</div>
+		</div>
 	</ion-content>	
 
 	<div class="bar bar-footer">
