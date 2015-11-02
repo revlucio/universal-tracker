@@ -43,9 +43,9 @@ gulp.task('vendor', function () {
     'www/lib/ngCordova/dist/ng-cordova.min.js',
     'www/lib/angular-touch/angular-touch.min.js',
     'www/lib/lodash/lodash.min.js',
+    'www/lib/angular-material/angular-material.min.js',
     'www/lib/angular-animate/angular-animate.min.js',
     'www/lib/angular-aria/angular-aria.min.js',
-    'www/lib/angular-material/angular-material.min.js',
     'www/1self/1self.js'])
       .pipe($.concat('vendor.min.js'))
       //.pipe($.uglify())
