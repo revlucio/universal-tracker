@@ -188,3 +188,7 @@ input[type="text"] {
 .has-footer {
     margin-bottom: 20px;
 }
+
+.modal {
+    min-height: initial;
+}
