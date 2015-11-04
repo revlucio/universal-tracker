@@ -27,7 +27,7 @@
         </a>
   	</div>
 
-    <button class="button button-block button-positive" ng-click="vm.clearHistory()">
+    <button ng-if="vm.isLocal" class="button button-block button-positive" ng-click="vm.clearHistory()">
       Clear History
     </button>
   </ion-content>

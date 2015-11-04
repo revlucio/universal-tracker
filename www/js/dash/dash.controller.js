@@ -92,7 +92,8 @@ function DashCtrl(
 			};
 			if (response) historyService.add(event);
 			vm.note = '';
-			toastService.show(activity.name + ' logged', 'short', 'center');
+			var message = 'Logged ' +event.amount+ ' ' +event.event;
+			toastService.show(message, 'short', 'center');
 	 	});
 	}
 
@@ -122,7 +123,8 @@ function DashCtrl(
 			};
 			if (response) historyService.add(event);
 			vm.note = '';
-			toastService.show(activity.name + ' logged', 'short', 'center');
+			var message = 'Logged a single ' +event.event;
+			toastService.show(message, 'short', 'center');
 	 	});
 	}
 
@@ -143,7 +145,8 @@ function DashCtrl(
 				if (response) historyService.add(event);
 				activity.duration = 0;
 				vm.note = '';
-				toastService.show(activity.name + ' logged', 'short', 'center');
+				var message = 'Logged ' +humanizeTime(event.duration)+ ' of ' +event.event;
+				toastService.show(message, 'short', 'center');
             });
         }
     }
@@ -182,8 +185,25 @@ function DashCtrl(
 				if (response) historyService.add(event);
 				activity.remaining = activity.duration;
 				vm.note = '';
-				toastService.show(activity.name + ' logged', 'short', 'center');
+				var message = 'Logged ' +humanizeTime(event.duration)+ ' of ' +event.event;
+				toastService.show(message, 'short', 'center');
             });
 		}
 	}
+
+	function humanizeTime(duration) {
+        var tstring = $filter('millisecondsToStringFilter')(duration).split(':');
+        var times = {
+            hours: parseInt(tstring[0], 10),
+            minutes: parseInt(tstring[1], 10),
+            seconds: parseInt(tstring[2], 10)
+        };
+
+        var result = '';
+        if (times.hours) result += times.hours + 'h ';
+        if (times.minutes) result += times.minutes + 'm ';
+        result += times.seconds + 's';
+
+        return result;
+    };
 }

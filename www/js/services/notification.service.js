@@ -20,8 +20,8 @@ function NotificationService($ionicPlatform){
                 count++;
                 id = window.plugin.notification.local.add({
                     id: id,
-                    title: 'Duration',
-                    message: 'Timer active',
+                    title: 'Universal Tracker',
+                    message: 'Timers active:',
                     date: new Date(),
                     ongoing: true,
                     badge: count

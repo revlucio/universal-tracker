@@ -9,6 +9,7 @@ function HistoryCtrl(historyService, $filter, oneSelfService) {
     vm.humanizeTime = humanizeTime;
     vm.clearHistory = clearHistory;
     vm.showChart = showChart;
+    vm.isLocal = (window.location.hostname === 'localhost');
 
     function showChart(name, type) {
         var url = oneSelfService.getChartUrl(name, type)
