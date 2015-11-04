@@ -26,8 +26,8 @@ gulp.task('css', function() {
 });
 
 gulp.task('html', function() {
-  gulp.src('www/**/*.html')
-    .pipe($.angularTemplatecache("templates.js", {module: "tracker", root: "templates/"}))
+  gulp.src('www/js/**/*.html')
+    .pipe($.angularTemplatecache("templates.js", {module: "tracker", root: ""}))
     .pipe(gulp.dest(folder));
 });
 
@@ -53,7 +53,7 @@ gulp.task('vendor', function () {
 
   gulp.src([
     'www/lib/ionic/release/css/ionic.min.css',
-    'www/lib/ionicons/css/ionicons.min.css',
+    //'www/lib/ionicons/css/ionicons.min.css',
     'www/lib/angular-material/angular-material.min.css',
     'www/lib/angular-material/angular-material.layouts.min.css'])
       .pipe($.concat('vendor.min.css'))

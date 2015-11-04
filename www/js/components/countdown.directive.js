@@ -3,6 +3,6 @@ angular.module('tracker')
 
 function countdownActivity() {
 	return {
-		templateUrl: 'js/components/countdown.directive.html'
+		templateUrl: 'components/countdown.directive.html'
 	};
 }
