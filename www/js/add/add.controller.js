@@ -4,6 +4,8 @@ angular.module('tracker')
 function AddCtrl(activityService, $state, newActivityService) {
 	var vm = this;
 
+	var lastActivity;
+
 	vm.activityTypes = activityService.getActivityTypes();
 	vm.addActivity = addActivity;
 	vm.newActivity = newActivityService.activity;
@@ -18,7 +20,10 @@ function AddCtrl(activityService, $state, newActivityService) {
 			+ vm.newActivity.duration.seconds * 1000;
 	}
 
-	function addActivity(sample) {
+	function addActivity() {
+		if (lastActivity === vm.newActivity) return;
+		lastActivity = vm.newActivity;
+
 		var duration = getDuration();
 
 		activityService.add({
