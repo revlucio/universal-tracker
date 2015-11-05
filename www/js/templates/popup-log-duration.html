@@ -23,5 +23,8 @@
 			ng-model="vm.data.duration.seconds"/>
 	</div>
 </div>
+<div class="centered assertive" ng-if="vm.durationIsZero()">
+	<strong>Please enter a duration</strong>
+</div>
 
 <ut-note ng-model="vm.note"></ut-note>

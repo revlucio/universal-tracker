@@ -33,7 +33,7 @@ gulp.task('html', function() {
 });
 
 gulp.task('watch', function() {
-  var watcher = gulp.watch(['www/js/**/*.js'], ['js']);
+  var watcher = gulp.watch(['www/js/**/*.*'], ['build']);
 });
 
 gulp.task('vendor', function () {

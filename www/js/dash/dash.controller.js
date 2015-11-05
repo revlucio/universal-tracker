@@ -3,7 +3,7 @@ angular.module('tracker')
 
 function DashCtrl(
 	$ionicPopup, $scope, activityService, historyService, activityTimingService, 
-	$filter, preferenceService, newActivityService, toastService, $ionicModal, $state,
+	$filter, preferenceService, newActivityService, toastService, $ionicPopover, $state,
 	appName) {
 	
 	var vm = this;
@@ -21,9 +21,11 @@ function DashCtrl(
 	vm.editActivities = editActivities;
 	vm.goTo1Self = goTo1Self;
 	vm.appName = appName;
+	vm.durationIsZero = durationIsZero;
 
-	$ionicModal.fromTemplateUrl('templates/menu.html', {
-	    scope: $scope
+	$ionicPopover.fromTemplateUrl('templates/menu.html', {
+	    scope: $scope,
+	    animation: ''
 	}).then(function(m) {
 	    modal = m;
 	});
@@ -34,12 +36,12 @@ function DashCtrl(
 
 	function editActivities() {
 		$state.go('tab.edit');
-		modal.hide();
+		modal.remove();
 	}
 
 	function goTo1Self() {
 		window.open("http://www.1self.co", '_system', 'location=no');
-		modal.hide();
+		modal.remove();
 	}
 
 	var logDurationConfig = {
@@ -49,13 +51,14 @@ function DashCtrl(
         scope: $scope,
         buttons: [{
             text: 'Cancel',
-            onTap: function(e) {
-                //activity.duration = 0;
-            }
+            onTap: function(e) { }
         }, {
             text: '<b>Log</b>',
             type: 'button-positive',
             onTap: function(e) {
+            	if (durationIsZero()) {
+            		e.preventDefault();	
+            	}
                 return vm.data.duration.hours * 3600000 + vm.data.duration.minutes * 60000 + vm.data.duration.seconds * 1000 + vm.data.duration.milliseconds;
             }
         }]
@@ -191,6 +194,17 @@ function DashCtrl(
 				toastService.show(message, 'short', 'center');
             });
 		}
+	}
+
+	function durationIsZero() {
+		var hours = vm.data.duration.hours.toString();
+		var minutes = vm.data.duration.minutes.toString();
+		var seconds = vm.data.duration.seconds.toString();
+		
+		return (
+			(hours === '0' || hours === '') &&
+			(minutes === '0' || minutes === '') &&
+			(seconds === '0' || seconds === ''));
 	}
 
 	function humanizeTime(duration) {

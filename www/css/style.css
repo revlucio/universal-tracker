@@ -198,3 +198,12 @@ input[type="text"] {
     font-size: 0.75em;
     padding-top: 6px;
 }
+
+#menu {
+    height: 110px; 
+    width: 180px;
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    opacity: 0.8;
+}
