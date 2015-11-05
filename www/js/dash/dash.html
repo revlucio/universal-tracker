@@ -1,6 +1,9 @@
 <ion-view title="{{vm.appName}}">
   <ion-nav-buttons side="right" class="settings-icon">
-    <a class="ion-android-more-vertical settings-button" ng-click="vm.clickSettings()"></a>
+  <span ng-click="vm.clickSettings()">
+    <span class="menu-label">menu</span>
+    <a class="ion-navicon settings-button"></a>
+  </span>
   </ion-nav-buttons>
   <ion-content class="padding custom-content">
     <ion-list>

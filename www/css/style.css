@@ -192,3 +192,9 @@ input[type="text"] {
 .modal {
     min-height: initial;
 }
+
+.menu-label {
+    color: white;
+    font-size: 0.75em;
+    padding-top: 6px;
+}
