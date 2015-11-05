@@ -3,7 +3,8 @@ angular.module('tracker')
 
 function DashCtrl(
 	$ionicPopup, $scope, activityService, historyService, activityTimingService, 
-	$filter, preferenceService, newActivityService, toastService, $ionicModal, $state) {
+	$filter, preferenceService, newActivityService, toastService, $ionicModal, $state,
+	appName) {
 	
 	var vm = this;
 
@@ -19,6 +20,7 @@ function DashCtrl(
 	vm.clickSettings = clickSettings;
 	vm.editActivities = editActivities;
 	vm.goTo1Self = goTo1Self;
+	vm.appName = appName;
 
 	$ionicModal.fromTemplateUrl('templates/menu.html', {
 	    scope: $scope

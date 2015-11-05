@@ -1,10 +1,9 @@
 angular.module('tracker')
     .factory('NotificationService', NotificationService);
 
-function NotificationService($ionicPlatform){
+function NotificationService($ionicPlatform, appName){
     var id = "1";
     var count = 0;
-    var title = "1self tracker";
     var message = "Timers active:";
 
     if (window.localStorage.active_activities) {
@@ -17,23 +16,25 @@ function NotificationService($ionicPlatform){
     };
 
     function showNotification() {
-        if (window.plugin) {
+        if (window.plugin && window.plugin.notification) {
             $ionicPlatform.ready(function() {
                 count++;
                 id = window.plugin.notification.local.add({
                     id: id,
-                    title: title,
+                    title: appName,
                     message: message,
                     date: new Date(),
                     ongoing: true,
                     badge: count
                 });
             });
+        } else {
+            console.log('Notification shown');
         }
     };
 
     function cancelNotification() {
-        if (window.plugin) {
+        if (window.plugin && window.plugin.notification) {
             $ionicPlatform.ready(function() {
                 count--;
                 if (count === 0) {
@@ -42,13 +43,15 @@ function NotificationService($ionicPlatform){
                 else {
                     window.plugin.notification.local.add({
                         id: id,
-                        title: title,
+                        title: appName,
                         message: message,
                         ongoing: true,
                         sound: null,
                         badge: count});
                 }
             });
+        } else {
+            console.log('Notification cancelled');
         }
     };
 }
