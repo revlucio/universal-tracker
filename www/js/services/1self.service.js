@@ -19,7 +19,7 @@ function oneSelfService(API) {
             source: API.appName,
             version: API.appVersion,
             objectTags: ["self"],
-            actionTags: event.event,
+            actionTags: clean(event.event),
             properties: { }
         };
 
@@ -47,4 +47,8 @@ function oneSelfService(API) {
 
         return url;
 	}
+
+    function clean(event) {
+        return event.toLowerCase().replace(' ', '-');
+    }
 }

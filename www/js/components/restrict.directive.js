@@ -19,13 +19,6 @@ function restrict() {
         ngModelCtrl.$render();
         return clean;
       });
-
-      // for some reason space bar doesnt fire by default
-      element.bind('keypress', function(event) {
-        if(event.keyCode === 32) {
-          event.preventDefault();
-        }
-      });
     }
   };
 }
