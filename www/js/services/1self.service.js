@@ -23,7 +23,11 @@ function oneSelfService(API) {
             properties: { }
         };
 
-        if (event.note) eventToLog.note = event.note;
+        if (event.note) {
+            eventToLog.note = event.note;
+            var hashtags = getHashtags(event.note);
+            if (hashtags) eventToLog.properties.tags = hashtags;
+        }
 
         if (event.amount) { 
             eventToLog.properties.quantity = event.amount;
@@ -50,5 +54,11 @@ function oneSelfService(API) {
 
     function clean(event) {
         return event.toLowerCase().replace(' ', '-');
+    }
+
+    function getHashtags(note) {
+        return [
+            'flatwhite'
+        ];
     }
 }

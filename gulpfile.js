@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var Server = require('karma').Server;
 var $ = require('gulp-load-plugins')();
 
 //========================
@@ -69,15 +70,8 @@ gulp.task('bower', function() {
   return bower()
 });
 
-gulp.task('test', ['bower'], function (done) {
+gulp.task('test', ['build'], function (done) {
   new Server({
     configFile: __dirname + '/karma.conf.js',
-    singleRun: true
-  }, done).start();
-});
-
-gulp.task('tdd', function (done) {
-  new Server({
-    configFile: __dirname + '/karma.conf.js'
   }, done).start();
 });
