@@ -53,12 +53,14 @@ gulp.task('vendor', function () {
 
   gulp.src([
     'www/lib/ionic/release/css/ionic.min.css',
-    //'www/lib/ionicons/css/ionicons.min.css',
     'www/lib/angular-material/angular-material.min.css',
     'www/lib/angular-material/angular-material.layouts.min.css'])
       .pipe($.concat('vendor.min.css'))
       //.pipe($.minifyCss())  
-      .pipe(gulp.dest(folder));
+      .pipe(gulp.dest(folder + '/css'));
+
+  gulp.src('www/lib/ionic/release/fonts/*.*')
+    .pipe(gulp.dest(folder + '/fonts'));
 });
 
 
