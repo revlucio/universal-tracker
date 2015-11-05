@@ -1,4 +1,6 @@
-universal tracker
+1self Tracker
 ===
 
-track all the things!
+Track all the things!
+
+make sure to run **gulp build** if you make changes

@@ -23,13 +23,5 @@
 			ng-model="vm.data.duration.seconds"/>
 	</div>
 </div>
-<div class="row">
-	<div class="col">
-		<input type="text" 
-			ng-model="vm.note" 
-			ut-restrict="[a-zA-Z0-9#]" 
-			placeholder="Optional: add a note">
-		</input>
-	</div>
-</div>
 
+<ut-note ng-model="vm.note"></ut-note>
