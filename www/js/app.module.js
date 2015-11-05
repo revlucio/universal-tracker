@@ -15,6 +15,10 @@ angular.module('tracker')
         if (window.plugin && window.plugin.notification) {
           window.plugin.notification.local.promptForPermission();
         }
+
+        if (window.cordova && window.cordova.InAppBrowser) {
+          window.open = window.cordova.InAppBrowser.open;  
+        }
           
           if(AuthenticationService.authenticated()){
               EventSendService.sendEvents();
@@ -32,4 +36,9 @@ angular.module('tracker')
               StatusBar.styleDefault();
           }
       })
+
+//       document.addEventListener("deviceready", onDeviceReady, false);
+// function onDeviceReady() {
+//     window.open = cordova.InAppBrowser.open;
+// }
   });

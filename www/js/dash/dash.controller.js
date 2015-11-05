@@ -204,7 +204,7 @@ function DashCtrl(
         var result = '';
         if (times.hours) result += times.hours + 'h ';
         if (times.minutes) result += times.minutes + 'm ';
-        result += times.seconds + 's';
+        if (times.seconds) result += times.seconds + 's ';
 
         return result;
     };

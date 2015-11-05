@@ -13,10 +13,13 @@ function restrict() {
       var match = new RegExp(attributes.utRestrict, 'g');
 
       ngModelCtrl.$parsers.push(function(val) {
-        var clean = val.match(match) ? val.match(match).join('') : '';
+        var asString = (val) ? val.toString() : '';
+        var clean = asString.match(match) ? asString.match(match).join('') : '';
 
-        ngModelCtrl.$setViewValue(clean);
-        ngModelCtrl.$render();
+        if (clean !== asString) {
+          ngModelCtrl.$setViewValue(clean);
+          ngModelCtrl.$render();
+        }
         return clean;
       });
     }
