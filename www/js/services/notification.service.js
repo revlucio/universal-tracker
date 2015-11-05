@@ -4,6 +4,8 @@ angular.module('tracker')
 function NotificationService($ionicPlatform){
     var id = "1";
     var count = 0;
+    var title = "1self tracker";
+    var message = "Timers active:";
 
     if (window.localStorage.active_activities) {
         count = Object.keys(angular.fromJson(window.localStorage.active_activities)).length;
@@ -20,8 +22,8 @@ function NotificationService($ionicPlatform){
                 count++;
                 id = window.plugin.notification.local.add({
                     id: id,
-                    title: 'Universal Tracker',
-                    message: 'Timers active:',
+                    title: title,
+                    message: message,
                     date: new Date(),
                     ongoing: true,
                     badge: count
@@ -40,8 +42,8 @@ function NotificationService($ionicPlatform){
                 else {
                     window.plugin.notification.local.add({
                         id: id,
-                        title: 'Duration',
-                        message: 'Timer active',
+                        title: title,
+                        message: message,
                         ongoing: true,
                         sound: null,
                         badge: count});
