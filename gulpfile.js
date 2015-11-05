@@ -37,29 +37,29 @@ gulp.task('watch', function() {
 
 gulp.task('vendor', function () {
   gulp.src([
-    'www/lib/ionic/release/js/ionic.bundle.min.js', 
-    'www/lib/moment/min/moment.min.js',
-    'www/lib/angular-moment/angular-moment.min.js',
-    'www/lib/ngCordova/dist/ng-cordova.min.js',
-    'www/lib/angular-touch/angular-touch.min.js',
-    'www/lib/lodash/lodash.min.js',
-    'www/lib/angular-material/angular-material.min.js',
-    'www/lib/angular-animate/angular-animate.min.js',
-    'www/lib/angular-aria/angular-aria.min.js',
+    'lib/ionic/release/js/ionic.bundle.min.js', 
+    'lib/moment/min/moment.min.js',
+    'lib/angular-moment/angular-moment.min.js',
+    'lib/ngCordova/dist/ng-cordova.min.js',
+    'lib/angular-touch/angular-touch.min.js',
+    'lib/lodash/lodash.min.js',
+    'lib/angular-material/angular-material.min.js',
+    'lib/angular-animate/angular-animate.min.js',
+    'lib/angular-aria/angular-aria.min.js',
     'www/1self/1self.js'])
       .pipe($.concat('vendor.min.js'))
       //.pipe($.uglify())
       .pipe(gulp.dest(folder));
 
   gulp.src([
-    'www/lib/ionic/release/css/ionic.min.css',
-    'www/lib/angular-material/angular-material.min.css',
-    'www/lib/angular-material/angular-material.layouts.min.css'])
+    'lib/ionic/release/css/ionic.min.css',
+    'lib/angular-material/angular-material.min.css',
+    'lib/angular-material/angular-material.layouts.min.css'])
       .pipe($.concat('vendor.min.css'))
       //.pipe($.minifyCss())  
       .pipe(gulp.dest(folder + '/css'));
 
-  gulp.src('www/lib/ionic/release/fonts/*.*')
+  gulp.src('lib/ionic/release/fonts/*.*')
     .pipe(gulp.dest(folder + '/fonts'));
 });
 
