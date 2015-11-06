@@ -26,6 +26,6 @@
 			ng-model="duration.seconds"/>
 	</div>
 </div>
-<div class="row centered assertive" ng-if="vm.durationIsZero()">
+<div class="row centered assertive" ng-if="!isValidDuration(duration)">
 	<strong>Duration must be at least 1 second</strong>
 </div>

@@ -7,8 +7,8 @@ var $ = require('gulp-load-plugins')();
 var filename = 'app.' + Date.now() + '.';
 var folder = 'www/dist';
 
-gulp.task('default', function() {
-  var watcher = gulp.watch('www/js/**/*.*', 'build');
+gulp.task('default', ['build'], function() {
+  var watcher = gulp.watch('www/js/**/*.*', ['build']);
 });
 gulp.task('build', ['js', 'css', 'html']);
 gulp.task('tdd', ['watchjs', 'test']);

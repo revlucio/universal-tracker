@@ -4,7 +4,7 @@ angular.module('tracker')
 function DashCtrl(
 	$ionicPopup, $scope, activityService, historyService, activityTimingService, 
 	$filter, preferenceService, newActivityService, toastService, $ionicPopover, $state,
-	appName) {
+	appName, durationService) {
 	
 	var vm = this;
 
@@ -21,7 +21,6 @@ function DashCtrl(
 	vm.editActivities = editActivities;
 	vm.goTo1Self = goTo1Self;
 	vm.appName = appName;
-	vm.durationIsZero = durationIsZero;
 
 	$ionicPopover.fromTemplateUrl('templates/menu.html', {
 	    scope: $scope,
@@ -56,7 +55,7 @@ function DashCtrl(
             text: '<b>Log</b>',
             type: 'button-positive',
             onTap: function(e) {
-            	if (durationIsZero()) {
+            	if (durationService.isValidDuration(vm.data.duration)) {
             		e.preventDefault();	
             	}
                 return vm.data.duration.hours * 3600000 + vm.data.duration.minutes * 60000 + vm.data.duration.seconds * 1000 + vm.data.duration.milliseconds;
@@ -194,17 +193,6 @@ function DashCtrl(
 				toastService.show(message, 'short', 'center');
             });
 		}
-	}
-
-	function durationIsZero() {
-		var hours = vm.data.duration.hours.toString();
-		var minutes = vm.data.duration.minutes.toString();
-		var seconds = vm.data.duration.seconds.toString();
-		
-		return (
-			(hours === '0' || hours === '') &&
-			(minutes === '0' || minutes === '') &&
-			(seconds === '0' || seconds === ''));
 	}
 
 	function humanizeTime(duration) {
