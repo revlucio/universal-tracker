@@ -19,7 +19,7 @@ describe('hashtagService', function() {
 		expect(hashtags.length).toBe(0);
 	});
 
-	it('should find hashtag', function() {
+	xit('should find hashtag', function() {
 		var hashtags = hashtagService.getTags('#single');
 
 		expect(hashtags.length).toBe(1);

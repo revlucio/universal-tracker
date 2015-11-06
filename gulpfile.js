@@ -7,8 +7,11 @@ var $ = require('gulp-load-plugins')();
 var filename = 'app.' + Date.now() + '.';
 var folder = 'www/dist';
 
-gulp.task('default', ['watch']);
+gulp.task('default', function() {
+  var watcher = gulp.watch('www/js/**/*.*', 'build');
+});
 gulp.task('build', ['js', 'css', 'html']);
+gulp.task('tdd', ['watchjs', 'test']);
 
 gulp.task('js', function () {
   gulp.src(['www/js/app.module.js', 'www/js/**/*.js'])
@@ -32,8 +35,8 @@ gulp.task('html', function() {
     .pipe(gulp.dest(folder));
 });
 
-gulp.task('watch', function() {
-  var watcher = gulp.watch(['www/js/**/*.*'], ['build']);
+gulp.task('watchjs', function() {
+  gulp.watch(['www/js/**/*.js'], ['js']);  
 });
 
 gulp.task('vendor', function () {
@@ -64,14 +67,10 @@ gulp.task('vendor', function () {
     .pipe(gulp.dest(folder + '/fonts'));
 });
 
-
-
-gulp.task('bower', function() {
-  return bower()
-});
-
-gulp.task('test', ['build'], function (done) {
+gulp.task('test', function (done) {
   new Server({
-    configFile: __dirname + '/karma.conf.js',
-  }, done).start();
+    configFile: __dirname + '/karma.conf.js'
+  }, function() {
+    done()
+  }).start();
 });

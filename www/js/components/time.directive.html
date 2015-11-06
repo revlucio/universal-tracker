@@ -1,0 +1,31 @@
+<div class="row">
+	<div class="col">Hours:</div>
+	<div class="col">Minutes:</div>
+	<div class="col">Seconds:</div>
+</div>
+<div class="row">
+	<div class="col">
+		<input type="tel" size="2" min="0" max="24"
+			pattern="[0-9]*"
+			ut-restrict="[0-9]"
+			ut-select-on-click
+			ng-model="duration.hours"/>
+	</div>
+	<div class="col">
+		<input type="tel" size="2" min="0" max="60" 
+			pattern="[0-9]*"
+			ut-restrict="[0-9]"
+			ut-select-on-click
+			ng-model="duration.minutes"/>
+	</div>
+	<div class="col">
+		<input type="tel" size="2" min="0" max="60" 
+			pattern="[0-9]*"
+			ut-restrict="[0-9]"
+			ut-select-on-click
+			ng-model="duration.seconds"/>
+	</div>
+</div>
+<div class="row centered assertive" ng-if="vm.durationIsZero()">
+	<strong>Duration must be at least 1 second</strong>
+</div>

@@ -1,5 +1,6 @@
 module.exports = function(config) {
   config.set({
+    //autoWatch: true,
     browsers: ['PhantomJS'],
     frameworks: ['jasmine'],
     files: [
@@ -7,7 +8,6 @@ module.exports = function(config) {
       'lib/angular-mocks/angular-mocks.js',
       'www/dist/app.min.js',
       'www/tests/**/*.js'
-    ],
-    singleRun: true
+    ]
   });
 };
