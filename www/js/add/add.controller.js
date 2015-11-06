@@ -13,7 +13,6 @@ function AddCtrl(activityService, $state, newActivityService) {
 	vm.activityInvalid = activityInvalid;
 	vm.nameAlreadyExists = nameAlreadyExists;
 
-
 	function getDuration() {
 		return vm.newActivity.duration.hours * 3600000 
 			+ vm.newActivity.duration.minutes * 60000 

@@ -6,6 +6,10 @@ function NotificationService($ionicPlatform, appName){
     var count = 0;
     var message = "Timers active:";
 
+    if (window.plugin && window.plugin.notification) {
+        window.plugin.notification.local.clearAll();
+    }
+
     if (window.localStorage.active_activities) {
         count = Object.keys(angular.fromJson(window.localStorage.active_activities)).length;
     }
