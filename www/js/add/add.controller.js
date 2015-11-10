@@ -1,7 +1,7 @@
 angular.module('tracker')
 	.controller('AddCtrl', AddCtrl);
 
-function AddCtrl(activityService, $state, newActivityService) {
+function AddCtrl(activityService, $state, newActivityService, durationService) {
 	var vm = this;
 
 	var lastActivity;
@@ -12,6 +12,7 @@ function AddCtrl(activityService, $state, newActivityService) {
 	vm.getDuration = getDuration;
 	vm.activityInvalid = activityInvalid;
 	vm.nameAlreadyExists = nameAlreadyExists;
+	vm.isValidDuration = durationService.isValidDuration;
 
 	function getDuration() {
 		return vm.newActivity.duration.hours * 3600000 

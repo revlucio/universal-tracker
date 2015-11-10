@@ -1,9 +1,12 @@
 angular.module('tracker')
 	.factory('durationService', durationService);
 
-function durationService() {
+function durationService($filter) {
 	return {
-		isValidDuration: isValidDuration
+		isValidDuration: isValidDuration,
+		durationToMilliseconds: durationToMilliseconds,
+		humanizeTime: humanizeTime,
+		getDurationSplit: getDurationSplit
 	};
 
 	function isValidDuration(duration) {
@@ -15,4 +18,38 @@ function durationService() {
 
 		return false;
 	}
+
+	function durationToMilliseconds(duration) {
+    	return duration.hours * 3600000 + duration.minutes * 60000 + duration.seconds * 1000 + duration.milliseconds;
+    }
+
+    function humanizeTime(duration) {
+        var tstring = $filter('millisecondsToStringFilter')(duration).split(':');
+        var times = {
+            hours: parseInt(tstring[0], 10),
+            minutes: parseInt(tstring[1], 10),
+            seconds: parseInt(tstring[2], 10)
+        };
+
+        var result = '';
+        if (times.hours) result += times.hours + 'h ';
+        if (times.minutes) result += times.minutes + 'm ';
+        if (times.seconds) result += times.seconds + 's ';
+
+        return result;
+    };
+
+    function getDurationSplit(duration) {
+    	var durationString = $filter('millisecondsToStringFilter')(duration);
+        var durationParts = durationString.split(':');
+
+		return {
+            duration: {
+                hours: parseInt(durationParts[0], 10),
+                minutes: parseInt(durationParts[1], 10),
+                seconds: parseInt(durationParts[2], 10),
+                milliseconds: parseInt(durationParts[3], 10)
+            }
+        };
+    }
 }

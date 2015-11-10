@@ -13,7 +13,7 @@
 	      Cancel
 	    </button>
 		<span class="col"></span>
-	    <button class="button button-positive col" ng-disabled="vm.getDuration() <= 0" ut-click="vm.addActivity()">
+	    <button class="button button-positive col" ng-disabled="!vm.isValidDuration(vm.newActivity.duration)" ng-click="vm.addActivity()">
 	      Add
 	    </button>
 	</div>
