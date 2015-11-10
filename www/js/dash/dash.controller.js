@@ -21,6 +21,7 @@ function DashCtrl(
 	vm.editActivities = editActivities;
 	vm.goTo1Self = goTo1Self;
 	vm.appName = appName;
+	vm.holdActivity = holdActivity;
 
 	$ionicPopover.fromTemplateUrl('templates/menu.html', {
 	    scope: $scope,
@@ -36,6 +37,10 @@ function DashCtrl(
 	function editActivities() {
 		$state.go('tab.edit');
 		modal.remove();
+	}
+
+	function holdActivity() {
+		$state.go('tab.edit');
 	}
 
 	function goTo1Self() {
