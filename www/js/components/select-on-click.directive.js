@@ -6,7 +6,9 @@ function selectOnClick($window) {
         restrict: 'A',
         link: function (scope, element, attrs) {
             element.bind('mouseup', function () {
-                this.setSelectionRange(0, this.value.length);
+            	if (this.value) {
+	                this.setSelectionRange(0, this.value.length);
+	            }
             });
         }
     }

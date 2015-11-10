@@ -65,12 +65,14 @@ function activityTimingService(
                 var timeRemaining = moment.duration(moment(activity.endDate).diff(moment()));
                 activity.remaining = timeRemaining.asMilliseconds();
             } else {
+
                 var duration = moment.duration(moment().diff(activity.startDate));
                 var event = { event:activity.name, duration:duration.asMilliseconds() };
                 historyService.add(event);
                 var message = 'Logged ' +humanizeTime(event.duration)+ ' of ' +event.event;
                 toastService.show(message, 'short', 'center');
 
+                NotificationService.cancelNotification();
                 $interval.cancel(activity.interval);
                 activity.remaining = activity.duration;
                 delete activity.interval;

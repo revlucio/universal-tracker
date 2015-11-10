@@ -12,6 +12,7 @@
 		    	type="text" 
 		    	ng-model="vm.newActivity.name" 
 		    	placeholder="Enter a custom name here"
+		    	ut-select-on-click
 		    	ut-restrict="[a-zA-Z0-9 ]">
 	  		</label>
 		  	<div class="centered assertive" ng-if="vm.nameAlreadyExists()">
