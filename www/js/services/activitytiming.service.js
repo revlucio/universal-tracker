@@ -1,7 +1,8 @@
 angular.module('tracker')
     .service('activityTimingService', activityTimingService);
 
-function activityTimingService(moment, $interval, NotificationService, historyService) {
+function activityTimingService(
+    moment, $interval, NotificationService, historyService, toastService, $filter) {
     return {
         toggleActivity: toggleActivity,
         toggleCountdownActivity: toggleCountdownActivity
@@ -65,14 +66,33 @@ function activityTimingService(moment, $interval, NotificationService, historySe
                 activity.remaining = timeRemaining.asMilliseconds();
             } else {
                 var duration = moment.duration(moment().diff(activity.startDate));
-                historyService.add({event:activity.name, duration:duration.asMilliseconds()});
+                var event = { event:activity.name, duration:duration.asMilliseconds() };
+                historyService.add(event);
+                var message = 'Logged ' +humanizeTime(event.duration)+ ' of ' +event.event;
+                toastService.show(message, 'short', 'center');
 
                 $interval.cancel(activity.interval);
                 activity.remaining = activity.duration;
                 delete activity.interval;
                 removeActiveActivity(activity);
             }
-        };
+        }
+
+        function humanizeTime(duration) {
+            var tstring = $filter('millisecondsToStringFilter')(duration).split(':');
+            var times = {
+                hours: parseInt(tstring[0], 10),
+                minutes: parseInt(tstring[1], 10),
+                seconds: parseInt(tstring[2], 10)
+            };
+
+            var result = '';
+            if (times.hours) result += times.hours + 'h ';
+            if (times.minutes) result += times.minutes + 'm ';
+            if (times.seconds) result += times.seconds + 's ';
+
+            return result;
+        }
     }
 
     // --- privates --- //

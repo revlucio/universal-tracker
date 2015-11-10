@@ -50,12 +50,15 @@ function DashCtrl(
         scope: $scope,
         buttons: [{
             text: 'Cancel',
-            onTap: function(e) { }
+            onTap: function(e) { 
+            	return false;
+            }
         }, {
             text: '<b>Log</b>',
             type: 'button-positive',
             onTap: function(e) {
-            	if (durationService.isValidDuration(vm.data.duration)) {
+            	console.log(vm.data.duration);
+            	if (!durationService.isValidDuration(vm.data.duration)) {
             		e.preventDefault();	
             	}
                 return vm.data.duration.hours * 3600000 + vm.data.duration.minutes * 60000 + vm.data.duration.seconds * 1000 + vm.data.duration.milliseconds;
@@ -73,7 +76,7 @@ function DashCtrl(
         	buttons: [{
 	            text: 'Cancel',
 	            onTap: function(e) {
-	            	return null;
+	            	return false;
 	            }
 	        }, {
 	            text: '<b>Log</b>',
@@ -88,16 +91,19 @@ function DashCtrl(
 	            }
 	        }]
 		}).then(function(response) {
-			var event = {
-				event: activity.name, 
-				amount: response, 
-				note: vm.note,
-				type: activity.type
-			};
-			if (response) historyService.add(event);
+			if (response) {
+				var event = {
+					event: activity.name, 
+					amount: response, 
+					note: vm.note,
+					type: activity.type
+				};
+				historyService.add(event);
+				var message = 'Logged ' +event.amount+ ' ' +event.event;
+				toastService.show(message, 'short', 'center');
+			}
+
 			vm.note = '';
-			var message = 'Logged ' +event.amount+ ' ' +event.event;
-			toastService.show(message, 'short', 'center');
 	 	});
 	}
 
@@ -119,16 +125,18 @@ function DashCtrl(
 	            }
 	        }]
 		}).then(function(response) {
-			var event = {
-				event: activity.name, 
-				amount: 1, 
-				note: vm.note,
-				type: activity.type
-			};
-			if (response) historyService.add(event);
+			if (response) {
+				var event = {
+					event: activity.name, 
+					amount: 1, 
+					note: vm.note,
+					type: activity.type
+				};
+				historyService.add(event);
+				var message = 'Logged a single ' +event.event;
+				toastService.show(message, 'short', 'center');
+			}
 			vm.note = '';
-			var message = 'Logged a single ' +event.event;
-			toastService.show(message, 'short', 'center');
 	 	});
 	}
 
@@ -140,17 +148,19 @@ function DashCtrl(
 
             $ionicPopup.show(logDurationConfig)
             .then(function(response) {
-            	var event = {
-            		event: activity.name, 
-            		duration: response, 
-            		note: vm.note,
-            		type: activity.type
-            	};
-				if (response) historyService.add(event);
-				activity.duration = 0;
+            	if (response) {
+	            	var event = {
+	            		event: activity.name, 
+	            		duration: response, 
+	            		note: vm.note,
+	            		type: activity.type
+	            	};
+					historyService.add(event);
+					activity.duration = 0;
+					var message = 'Logged ' +humanizeTime(event.duration)+ ' of ' +event.event;
+					toastService.show(message, 'short', 'center');
+				}
 				vm.note = '';
-				var message = 'Logged ' +humanizeTime(event.duration)+ ' of ' +event.event;
-				toastService.show(message, 'short', 'center');
             });
         }
     }
@@ -174,23 +184,25 @@ function DashCtrl(
 			activityTimingService.toggleCountdownActivity(activity);
 		} else {
 			activityTimingService.toggleCountdownActivity(activity);
-
 			vm.data = getDurationSplit(activity.duration-activity.remaining+1000);
 
-			$ionicPopup.show(logDurationConfig)
+			$ionicPopup
+			.show(logDurationConfig)
             .then(function(response) {
-            	var event = {
-            		event: activity.name, 
-            		duration: response, 
-            		note: vm.note,
-            		type: activity.type
-            	};
-				
-				if (response) historyService.add(event);
-				activity.remaining = activity.duration;
-				vm.note = '';
-				var message = 'Logged ' +humanizeTime(event.duration)+ ' of ' +event.event;
-				toastService.show(message, 'short', 'center');
+            	if (response) {
+	            	var event = {
+	            		event: activity.name, 
+	            		duration: response, 
+	            		note: vm.note,
+	            		type: activity.type
+	            	};
+					
+					historyService.add(event);
+					activity.remaining = activity.duration;
+					var message = 'Logged ' +humanizeTime(event.duration)+ ' of ' +event.event;
+					toastService.show(message, 'short', 'center');
+				}
+				vm.note = '';	
             });
 		}
 	}

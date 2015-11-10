@@ -28,19 +28,29 @@ describe('durationService', function(){
 			expectDuration({ minutes: 0, seconds: 0 }, false);
 		});
 
+		it('should return false if duration is 0', function() {
+			expectDuration({ hours: 0, minutes: 0, seconds: 0 }, false);
+			expectDuration({ hours: '0', minutes: 0, seconds: 0 }, false);
+			expectDuration({ hours: '0', minutes: '0', seconds: 0 }, false);
+			expectDuration({ hours: '0', minutes: '0', seconds: '0' }, false);
+		});
+
 		it('should return true if hours are above 0', function() {
 			expectDuration({ hours: 1, minutes: 0, seconds: 0 }, true);
 			expectDuration({ hours: 10, minutes: 0, seconds: 0 }, true);
+			expectDuration({ hours: '10', minutes: 0, seconds: 0 }, true);
 		});
 
 		it('should return true if minutes are above 0', function() {
 			expectDuration({ hours: 0, minutes: 1, seconds: 0 }, true);
 			expectDuration({ hours: 0, minutes: 10, seconds: 0 }, true);
+			expectDuration({ hours: 0, minutes: '10', seconds: 0 }, true);
 		});
 
 		it('should return true if seconds are above 0', function() {
 			expectDuration({ hours: 0, minutes: 0, seconds: 1 }, true);
 			expectDuration({ hours: 0, minutes: 0, seconds: 10 }, true);
+			expectDuration({ hours: 0, minutes: 0, seconds: '10' }, true);
 		});
 
 		function expectDuration(duration, toBe) {
