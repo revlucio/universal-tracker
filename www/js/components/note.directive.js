@@ -3,6 +3,9 @@ angular.module('tracker')
 
 function note() {
 	return {
-		templateUrl: 'components/note.directive.html'
+		templateUrl: 'components/note.directive.html',
+		scope: {
+			data: '='
+		}
 	};
 }

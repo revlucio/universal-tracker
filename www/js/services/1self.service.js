@@ -25,8 +25,6 @@ function oneSelfService(API) {
 
         if (event.note) {
             eventToLog.note = event.note;
-            var hashtags = getHashtags(event.note);
-            if (hashtags) eventToLog.properties.tags = hashtags;
         }
 
         if (event.amount) { 

@@ -13,8 +13,6 @@ function DashCtrl(
 	newActivityService.activity = { duration: { hours: 0, minutes: 0, seconds: 0 }};
 
 	vm.activities = activityService.getActivities();
-	vm.logSingle = logSingle;
-	vm.logMulti = logMulti;
 	vm.logDuration = logDuration;
 	vm.logCountdown = logCountdown;
 	vm.clickSettings = clickSettings;
@@ -71,79 +69,7 @@ function DashCtrl(
         }]
     };
 
-	function logMulti(activity) {
-		vm.amount = preferenceService.getLastAmountLogged(activity.name);
-
-		$ionicPopup.show({
-        	templateUrl: 'templates/popup-logmulti.html',
-			title: 'How many '+activity.name+' did you do?',
-        	scope: $scope,
-        	buttons: [{
-	            text: 'Cancel',
-	            onTap: function(e) {
-	            	return false;
-	            }
-	        }, {
-	            text: '<b>Log</b>',
-	            type: 'button-positive',
-	            disabled: true,
-	            onTap: function(e) {
-	            	if (vm.amount <= 0) {
-	            		e.preventDefault();
-	            	} else {
-		                return vm.amount;
-		            }
-	            }
-	        }]
-		}).then(function(response) {
-			if (response) {
-				var event = {
-					event: activity.name, 
-					amount: response, 
-					note: vm.note,
-					type: activity.type
-				};
-				historyService.add(event);
-				var message = 'Logged ' +event.amount+ ' ' +event.event;
-				toastService.show(message, 'short', 'center');
-			}
-
-			vm.note = '';
-	 	});
-	}
-
-	function logSingle(activity) {
-		$ionicPopup.show({
-        	templateUrl: 'templates/popup-logsingle.html',
-			title: 'Do you want to log a ' + activity.name + '?',
-        	scope: $scope,
-        	buttons: [{
-	            text: 'Cancel',
-	            onTap: function(e) {
-	            	return false;
-	            }
-	        }, {
-	            text: '<b>Log</b>',
-	            type: 'button-positive',
-	            onTap: function(e) {
-	                return true;
-	            }
-	        }]
-		}).then(function(response) {
-			if (response) {
-				var event = {
-					event: activity.name, 
-					amount: 1, 
-					note: vm.note,
-					type: activity.type
-				};
-				historyService.add(event);
-				var message = 'Logged a single ' +event.event;
-				toastService.show(message, 'short', 'center');
-			}
-			vm.note = '';
-	 	});
-	}
+	
 
 	function logDuration(activity) {
         var activity = activityTimingService.toggleActivity(activity);
