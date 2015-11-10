@@ -1,7 +1,16 @@
 <div class="row">
 	<div class="col">
-		<input type="tel" ng-model="vm.amount" ut-select-on-click pattern="[0-9]*"></input>
+		<input 
+			ng-model="vm.amount" 
+			type="tel" 
+			ut-select-on-click 
+			ut-restrict="[0-9]"
+			pattern="[0-9]*">
+		</input>
 	</div>
+</div>
+<div class="centered assertive" ng-if="vm.amount <= 0">
+	<strong>Please enter an amount</strong>
 </div>
 
 <ut-note ng-model="vm.note"></ut-note>
