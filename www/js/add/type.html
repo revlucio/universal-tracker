@@ -30,7 +30,7 @@
 	      Cancel
 	    </button>
 		<span class="col"></span>
-	    <button ng-disabled="!vm.newActivity.type" ng-if="vm.newActivity.type !== 'countdown'" class="button button-positive col" ut-click="vm.addActivity()">
+	    <button ng-disabled="!vm.newActivity.type" ng-if="vm.newActivity.type !== 'countdown'" class="button button-positive col" ng-click="vm.addActivity()">
 	      Add
 	    </button>
 	    <button ng-if="vm.newActivity.type === 'countdown'" class="button button-positive col" ui-sref="add-activity.duration">

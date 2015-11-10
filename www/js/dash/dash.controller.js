@@ -2,14 +2,10 @@ angular.module('tracker')
 	.controller('DashCtrl', DashCtrl);
 
 function DashCtrl(
-	$ionicPopup, $scope, activityService, historyService, activityTimingService, 
-	$filter, preferenceService, newActivityService, toastService, $ionicPopover, $state,
-	appName, durationService) {
-	
+	$scope, activityService, newActivityService, $ionicPopover, $state, appName) {
+
 	var vm = this;
-
 	var modal;
-
 	newActivityService.activity = { duration: { hours: 0, minutes: 0, seconds: 0 }};
 
 	vm.activities = activityService.getActivities();
