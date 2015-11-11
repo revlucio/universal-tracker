@@ -41,7 +41,7 @@ function oneSelfService(API) {
 
 		var url = lib1self
             .objectTags(["self"])
-            .actionTags([actionTag])
+            .actionTags([clean(actionTag)])
             .sum(sum)
             .barChart()
             .backgroundColor("00B8E7")
@@ -52,11 +52,5 @@ function oneSelfService(API) {
 
     function clean(event) {
         return event.toLowerCase().replace(' ', '-');
-    }
-
-    function getHashtags(note) {
-        return [
-            'flatwhite'
-        ];
     }
 }
