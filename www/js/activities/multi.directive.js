@@ -14,6 +14,7 @@ function multiActivity(
 	};
 
 	function log(activity) {
+		activity.note = '';
 		var popupScope = $rootScope.$new();
 		popupScope.activity = activity;
 
@@ -41,14 +42,9 @@ function multiActivity(
 	        }]
 		}).then(function(response) {
 			if (response) {
-				var event = {
-					action: activity.name, 
-					note: activity.note,
-					amount: activity.amount, 
-				};
-				var message = 'Logged ' +event.amount+ ' ' +event.action;
-				historyService.add(event, message);
-				activity.note = '';
+				activity.action = activity.name;
+				var message = 'Logged ' +activity.amount+ ' ' +activity.action;
+				historyService.add(activity, message);
 			}
 	 	});
 	}

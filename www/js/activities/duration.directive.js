@@ -23,6 +23,7 @@ function durationActivity(
 	}
 
 	function log(activity) {
+		activity.note = '';
 		var popupScope = $rootScope.$new();
 		popupScope.activity = activity;
 		popupScope.data = durationService.getDurationSplit(activity.duration);
@@ -46,16 +47,11 @@ function durationActivity(
 	        }]
 	    })
         .then(function(response) {
-        	console.log(popupScope.data);
         	if (response) {
-            	var event = {
-            		action: activity.name, 
-            		note: activity.note,
-            		duration: durationService.durationToSeconds(popupScope.data.duration),
-            	};
-				var message = 'Logged ' +durationService.humanizeTime(event.duration)+ ' of ' +event.action;
-				historyService.add(event, message);
-				activity.note = '';
+        		activity.action = activity.name;
+        		activity.duration = durationService.durationToSeconds(popupScope.data.duration);
+				var message = 'Logged ' +durationService.humanizeTime(activity.duration)+ ' of ' +activity.action;
+				historyService.add(activity, message);		
 			}
         });
     }

@@ -13,6 +13,7 @@ function singleActivity($rootScope, $ionicPopup, historyService, toastService) {
 	};
 
 	function log(activity) {
+		activity.note = '';
 		var popupScope = $rootScope.$new();
 		popupScope.activity = activity;
 
@@ -34,14 +35,10 @@ function singleActivity($rootScope, $ionicPopup, historyService, toastService) {
 	        }]
 		}).then(function(response) {
 			if (response) {
-				var event = {
-					action: activity.name, 
-					note: activity.note,
-					amount: 1
-				};
-				var message = 'Logged a single ' +event.action;
-				historyService.add(event, message);
-				activity.note = '';
+				activity.action = activity.name;
+				activity.amount = 1;
+				var message = 'Logged a single ' +activity.action;
+				historyService.add(activity, message);
 			}
 	 	});
 	}

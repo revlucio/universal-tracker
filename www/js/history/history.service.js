@@ -35,13 +35,12 @@ function historyService(preferenceService, oneSelfService, toastService) {
 	}
 
 	function add(event, message) {
-        console.log(event);
         event.when = new Date().toISOString();
         oneSelfService.sendEventToApi(event);
 		history.push(event);
 		save();
 		if (event.amount) {
-            preferenceService.setLastAmountLogged(event.event, event.amount);
+            preferenceService.setLastAmountLogged(event.action, event.amount);
         }
         toastService.show(message, 'short', 'center');
 	}
@@ -62,11 +61,11 @@ function historyService(preferenceService, oneSelfService, toastService) {
             // if is value and event with that event exists in groups[date]
             // add the value to existing value
             if (event.amount) {
-            	var sum = _.find(groups[date], { 'event': event.event });
+            	var sum = _.find(groups[date], { 'action': event.action });
             	if (sum) {
             		sum.amount += event.amount;
             	} else {            		
-	            	groups[date].unshift({event: event.event, amount:event.amount});
+	            	groups[date].unshift({action: event.action, amount:event.amount});
             	}
             } else {
 	            groups[date].unshift(event);

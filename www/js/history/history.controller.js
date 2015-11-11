@@ -37,12 +37,12 @@ function HistoryCtrl(historyService, $filter, oneSelfService) {
             // if is value and event with that event exists in groups[date]
             // add the value to existing value
             if (event.amount) {
-                var sum = _.find(groups[date], { 'event': event.event });
+                var sum = _.find(groups[date], { 'event': event.action });
                 if (sum) {
                     sum.amount += event.amount;
                 } else {                    
                     groups[date].unshift({
-                        event: event.event, 
+                        action: event.action, 
                         amount: event.amount,
                         type: event.type
                     });
