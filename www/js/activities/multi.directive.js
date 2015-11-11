@@ -42,14 +42,13 @@ function multiActivity(
 		}).then(function(response) {
 			if (response) {
 				var event = {
-					event: activity.name, 
+					action: activity.name, 
 					note: activity.note,
-					type: activity.type,
 					amount: activity.amount, 
 				};
-				historyService.add(event);
-				var message = 'Logged ' +event.amount+ ' ' +event.event;
-				toastService.show(message, 'short', 'center');
+				var message = 'Logged ' +event.amount+ ' ' +event.action;
+				historyService.add(event, message);
+				activity.note = '';
 			}
 	 	});
 	}

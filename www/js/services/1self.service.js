@@ -19,8 +19,8 @@ function oneSelfService(API) {
             source: API.appName,
             version: API.appVersion,
             objectTags: ["self"],
-            actionTags: clean(event.event),
-            properties: { }
+            actionTags: clean(event.action),
+            properties: { },
         };
 
         if (event.note) {
@@ -29,8 +29,8 @@ function oneSelfService(API) {
 
         if (event.amount) { 
             eventToLog.properties.quantity = event.amount;
-        } else {
-            eventToLog.properties.duration = event.duration / 1000;
+        } else if (event.duration) {
+            eventToLog.properties.duration = event.duration;
         }
 
         lib1self.sendEvent(eventToLog, stream);

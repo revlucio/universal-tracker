@@ -49,14 +49,13 @@ function countdownActivity(
         .then(function(response) {
 			if (response) {
             	var event = {
-            		event: activity.name, 
+            		action: activity.name, 
             		note: activity.note,
-            		type: activity.type,
-            		duration: durationService.durationToMilliseconds(popupScope.data.duration),
+            		duration: durationService.durationToSeconds(popupScope.data.duration),
             	};
-				historyService.add(event);
-				var message = 'Logged ' +durationService.humanizeTime(event.duration)+ ' of ' +event.event;
-				toastService.show(message, 'short', 'center');
+				var message = 'Logged ' +durationService.humanizeTime(event.duration)+ ' of ' +event.action;
+				historyService.add(event, message);
+				activity.note = '';
 			}
         });
 	}

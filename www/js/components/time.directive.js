@@ -9,7 +9,7 @@ function time(durationService) {
 			duration: '='
 		},
 		link: function(scope) {
-			scope.isValidDuration = durationService.isValidDuration
+			scope.isValidDuration = durationService.isValidDuration;
 		}
 	};
 }

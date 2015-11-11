@@ -6,7 +6,8 @@ function durationService($filter) {
 		isValidDuration: isValidDuration,
 		durationToMilliseconds: durationToMilliseconds,
 		humanizeTime: humanizeTime,
-		getDurationSplit: getDurationSplit
+		getDurationSplit: getDurationSplit,
+        durationToSeconds: durationToSeconds
 	};
 
 	function isValidDuration(duration) {
@@ -21,6 +22,10 @@ function durationService($filter) {
 
 	function durationToMilliseconds(duration) {
     	return duration.hours * 3600000 + duration.minutes * 60000 + duration.seconds * 1000 + duration.milliseconds;
+    }
+
+    function durationToSeconds(duration) {
+        return Math.floor(durationToMilliseconds(duration) / 1000);
     }
 
     function humanizeTime(duration) {

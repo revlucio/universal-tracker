@@ -35,14 +35,13 @@ function singleActivity($rootScope, $ionicPopup, historyService, toastService) {
 		}).then(function(response) {
 			if (response) {
 				var event = {
-					event: activity.name, 
+					action: activity.name, 
 					note: activity.note,
-					type: activity.type,
 					amount: 1
 				};
-				historyService.add(event);
-				var message = 'Logged a single ' +event.event;
-				toastService.show(message, 'short', 'center');
+				var message = 'Logged a single ' +event.action;
+				historyService.add(event, message);
+				activity.note = '';
 			}
 	 	});
 	}

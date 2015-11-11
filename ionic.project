@@ -2,6 +2,6 @@
   "name": "universal-tracker",
   "app_id": "d57e1d89",
   "gulpStartupTasks": [
-    "watch"
+    "default"
   ]
 }
