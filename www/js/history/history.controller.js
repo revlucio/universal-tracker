@@ -17,7 +17,7 @@ function HistoryCtrl(historyService, $filter, oneSelfService) {
     };
 
     function humanizeTime(duration) {
-        var tstring = $filter('millisecondsToStringFilter')(duration).split(':');
+        var tstring = $filter('millisecondsToStringFilter')(duration*1000).split(':');
         return {
             hours: parseInt(tstring[0], 10),
             minutes: parseInt(tstring[1], 10),

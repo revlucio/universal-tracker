@@ -29,7 +29,7 @@ function durationService($filter) {
     }
 
     function humanizeTime(duration) {
-        var tstring = $filter('millisecondsToStringFilter')(duration).split(':');
+        var tstring = $filter('millisecondsToStringFilter')(duration*1000).split(':');
         var times = {
             hours: parseInt(tstring[0], 10),
             minutes: parseInt(tstring[1], 10),

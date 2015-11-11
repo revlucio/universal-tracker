@@ -46,11 +46,11 @@ function durationActivity(
 	        }]
 	    })
         .then(function(response) {
+        	console.log(popupScope.data);
         	if (response) {
             	var event = {
             		action: activity.name, 
             		note: activity.note,
-            		//duration: activity.duration
             		duration: durationService.durationToSeconds(popupScope.data.duration),
             	};
 				var message = 'Logged ' +durationService.humanizeTime(event.duration)+ ' of ' +event.action;
